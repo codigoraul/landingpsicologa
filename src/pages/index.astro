@@ -1,0 +1,1848 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import ServiciosGrid from '../components/ServiciosGrid.astro';
+import Testimonios from '../components/Testimonios.astro';
+import ContactInfo from '../components/ContactInfo.astro';
+
+const convenios = [
+	{ name: 'Colmena', logo: '/images/colmena.png' },
+	{ name: 'Banmédica', logo: '/images/banmedica.png' },
+	{ name: 'Vida Tres', logo: '/images/vidatres.png' },
+	{ name: 'Cruz Blanca', logo: '/images/cruzblanca.png' },
+	{ name: 'Consalud', logo: '/images/consalud.png' }
+];
+---
+
+<Layout title="Psicóloga Clínica - Psicoterapia Adulto">
+	<Header />
+	
+	<section id="inicio" class="hero">
+		<div class="hero-slider">
+			<div class="slide slide-one active">
+				<div class="hero-content">
+					<h1>Las heridas del pasado no son tu culpa.<br><span class="highlight">Sanar, hoy, sí es tu responsabilidad.</span></h1>
+				</div>
+			</div>
+			<div class="slide slide-two">
+				<div class="hero-content">
+					<h1>Iniciar un proceso terapéutico es una decisión valiente.<br>Implica detenerse, mirar hacia dentro y asumir el compromiso de comprender aquello que duele.</h1>
+				</div>
+			</div>
+			<div class="slide slide-three">
+				<div class="hero-content">
+					<h1>Te ofrezco un espacio terapéutico <span class="highlight">100% online, confidencial y seguro</span>, donde podrás explorar tu historia con respeto y contención profesional.</h1>
+				</div>
+			</div>
+			<div class="slide slide-four">
+				<div class="hero-content">
+					<h1>Sanar no es olvidar lo vivido;<br>es aprender a resignificarlo para vivir con mayor claridad, equilibrio y sentido.</h1>
+				</div>
+			</div>
+			<div class="slide">
+				<div class="hero-content">
+					<h1>Si estás aquí, probablemente algo dentro de ti<br><span class="highlight">ya sabe que es momento de hacerlo distinto.</span></h1>
+					<div class="cta-group">
+						<a href="#contacto" class="cta-button primary">
+							<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+								<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+							</svg>
+							Comienza tu Proceso Terapéutico
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="slider-indicators">
+			<button class="indicator active" onclick="goToSlide(0)"></button>
+			<button class="indicator" onclick="goToSlide(1)"></button>
+			<button class="indicator" onclick="goToSlide(2)"></button>
+			<button class="indicator" onclick="goToSlide(3)"></button>
+			<button class="indicator" onclick="goToSlide(4)"></button>
+		</div>
+	</section>
+
+	
+
+	<section id="areas-atencion" class="areas-section">
+		<div class="container">
+			<div class="section-header">
+				<span class="section-badge">¿En qué puedo ayudarte?</span>
+				<h2>Áreas de atención</h2>
+				<p>Acompañamiento terapéutico profesional en las áreas que necesitas para tu bienestar emocional</p>
+			</div>
+			
+			<div class="areas-grid">
+				<div class="area-card">
+					<div class="area-icon">
+						<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<path d="M9.5 2A2.5 2.5 0 0 1 12 4.5a2.5 2.5 0 0 1-2.5 2.5A2.5 2.5 0 0 1 7 4.5 2.5 2.5 0 0 1 9.5 2z"/>
+							<path d="M9.5 7C5.36 7 2 10.36 2 14.5S5.36 22 9.5 22 17 18.64 17 14.5 13.64 7 9.5 7z"/>
+							<path d="M15 2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2 2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/>
+							<path d="M15 8c-2.21 0-4 1.79-4 4v2c0 2.21 1.79 4 4 4s4-1.79 4-4v-2c0-2.21-1.79-4-4-4z"/>
+						</svg>
+					</div>
+					<h3>Salud emocional y estado de ánimo</h3>
+					<p>Acompañamiento en procesos de depresión, ansiedad, trastornos del pánico, traumas y trastornos de la personalidad (bipolaridad, TLP).</p>
+				</div>
+				
+				<div class="area-card">
+					<div class="area-icon">
+						<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z"/>
+							<path d="M12 8v4"/>
+							<circle cx="12" cy="16" r="1"/>
+						</svg>
+					</div>
+					<h3>Situaciones de vida difíciles</h3>
+					<p>Apoyo en experiencias de abuso sexual, duelo, enfermedades (cáncer, alopecia) y otros momentos que requieren contención profesional.</p>
+				</div>
+				
+				<div class="area-card">
+					<div class="area-icon">
+						<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+							<circle cx="9" cy="7" r="4"/>
+							<path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+							<path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+						</svg>
+					</div>
+					<h3>Relaciones y vínculos</h3>
+					<p>Trabajo en conflictos familiares, límites, habilidades de comunicación, celos e inseguridades en la relación de pareja.</p>
+				</div>
+				
+				<div class="area-card">
+					<div class="area-icon">
+						<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+						</svg>
+					</div>
+					<h3>Desarrollo personal y laboral</h3>
+					<p>Definición de metas concretas, toma de decisiones, fortalecimiento de la perseverancia, apertura de conciencia y desarrollo del potencial.</p>
+				</div>
+				
+				<div class="area-card">
+					<div class="area-icon">
+						<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
+							<polyline points="14,2 14,8 20,8"/>
+							<line x1="16" y1="13" x2="8" y2="13"/>
+							<line x1="16" y1="17" x2="8" y2="17"/>
+							<polyline points="10,9 9,9 8,9"/>
+						</svg>
+					</div>
+					<h3>Manejo del estrés y burnout</h3>
+					<p>Estrategias para recuperar el equilibrio cuando el trabajo o las exigencias del día a día te sobrepasan.</p>
+				</div>
+				
+				<div class="area-card">
+					<div class="area-icon">
+						<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+						</svg>
+					</div>
+					<h3>Autoestima y regulación emocional</h3>
+					<p>Trabajo en autoestima, impulsividad, control de pensamientos intrusivos y hábitos más saludables.</p>
+				</div>
+				
+				<div class="area-card">
+					<div class="area-icon">
+						<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<circle cx="12" cy="12" r="10"/>
+							<path d="M12 6v6l4 2"/>
+						</svg>
+					</div>
+					<h3>Desapego y soltar</h3>
+					<p>Acompañamiento en el aprendizaje del desapego como herramienta de bienestar y crecimiento personal.</p>
+				</div>
+				
+				<div class="area-card">
+					<div class="area-icon">
+						<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<path d="M12 2L2 7l10 5 10-5-10-5z"/>
+							<path d="M2 17l10 5 10-5"/>
+							<path d="M2 12l10 5 10-5"/>
+						</svg>
+					</div>
+					<h3>Sexualidad y bienestar</h3>
+					<p>Abordaje de problemáticas sexuales desde una mirada psicológica, sin juicios y con total confidencialidad.</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<div id="servicios">
+		<ServiciosGrid />
+	</div>
+
+	<section id="temas" class="temas-section">
+		<div class="container">
+			<div class="section-header">
+				<span class="section-badge">Temas Abordados</span>
+				<h2>Especialista en Diversas Áreas de la Salud Mental</h2>
+				<p class="section-subtitle">Acompañamiento terapéutico integral para tu bienestar</p>
+			</div>
+
+			<div class="temas-categories">
+				<div class="categoria-card">
+					<div class="categoria-icon">
+						<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<path d="M9 11l3 3L22 4"/>
+							<path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+						</svg>
+					</div>
+					<h3>Trastornos del Estado de Ánimo</h3>
+					<ul>
+						<li>Depresión</li>
+						<li>Ansiedad</li>
+						<li>Trastornos de Pánico</li>
+						<li>Manejo de Traumas</li>
+					</ul>
+				</div>
+
+				<div class="categoria-card">
+					<div class="categoria-icon">
+						<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z"/>
+						</svg>
+					</div>
+					<h3>Trastornos de la Personalidad</h3>
+					<ul>
+						<li>Bipolaridad</li>
+						<li>Trastorno Límite de la Personalidad</li>
+						<li>Manejo de impulsividad</li>
+						<li>Control de pensamientos intrusivos</li>
+					</ul>
+				</div>
+
+				<div class="categoria-card">
+					<div class="categoria-icon">
+						<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+							<circle cx="8.5" cy="7" r="4"/>
+							<line x1="20" y1="8" x2="20" y2="14"/>
+							<line x1="23" y1="11" x2="17" y2="11"/>
+						</svg>
+					</div>
+					<h3>Relaciones y Familia</h3>
+					<ul>
+						<li>Establecimiento de límites</li>
+						<li>Conflictos familiares</li>
+						<li>Habilidades sociales y comunicación</li>
+						<li>Celos e inseguridades de pareja</li>
+					</ul>
+				</div>
+
+				<div class="categoria-card">
+					<div class="categoria-icon">
+						<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<circle cx="12" cy="12" r="10"/>
+							<polyline points="12 6 12 12 16 14"/>
+						</svg>
+					</div>
+					<h3>Desarrollo Personal y Laboral</h3>
+					<ul>
+						<li>Metas laborales concretas</li>
+						<li>Objetivos personales</li>
+						<li>Fortalecimiento de perseverancia</li>
+						<li>Toma de decisiones</li>
+					</ul>
+				</div>
+
+				<div class="categoria-card">
+					<div class="categoria-icon">
+						<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+						</svg>
+					</div>
+					<h3>Manejo del Estrés y Bienestar</h3>
+					<ul>
+						<li>Burnout laboral</li>
+						<li>Problemas sexuales</li>
+						<li>Autoestima</li>
+						<li>Hábitos saludables</li>
+					</ul>
+				</div>
+
+				<div class="categoria-card">
+					<div class="categoria-icon">
+						<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<heart/>
+						</svg>
+					</div>
+					<h3>Apoyo y Crecimiento</h3>
+					<ul>
+						<li>Abuso sexual</li>
+						<li>Acompañamiento en tratamientos médicos</li>
+						<li>Práctica del desapego</li>
+						<li>Apertura de conciencia</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section id="casos" class="casos-section">
+		<div class="container">
+			<div class="section-header">
+				<h2>Situaciones Comunes que Abordamos</h2>
+				<p class="section-subtitle">Te acompaño en tu proceso de sanación y crecimiento</p>
+			</div>
+
+			<div class="casos-grid">
+				<div class="caso-card">
+					<div class="caso-icon">
+						<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<path d="M9 11l3 3L22 4"/>
+							<path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+						</svg>
+					</div>
+					<p>Siento que no puedo controlar mi ansiedad y los pensamientos negativos</p>
+				</div>
+
+				<div class="caso-card">
+					<div class="caso-icon">
+						<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<circle cx="12" cy="12" r="10"/>
+							<path d="M16 8s-1.5 2-4 2 4-4 4-4"/>
+							<path d="M8 16s1.5-2 4-2-4 4-4 4"/>
+						</svg>
+					</div>
+					<p>Estoy pasando por una depresión y no encuentro motivación para nada</p>
+				</div>
+
+				<div class="caso-card">
+					<div class="caso-icon">
+						<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z"/>
+						</svg>
+					</div>
+					<p>Necesito ayuda para sanar traumas del pasado que me afectan hoy</p>
+				</div>
+
+				<div class="caso-card">
+					<div class="caso-icon">
+						<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+							<circle cx="8.5" cy="7" r="4"/>
+							<line x1="20" y1="8" x2="20" y2="14"/>
+							<line x1="23" y1="11" x2="17" y2="11"/>
+						</svg>
+					</div>
+					<p>Tengo problemas en mis relaciones y no sé cómo establecer límites</p>
+				</div>
+
+				<div class="caso-card">
+					<div class="caso-icon">
+						<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<circle cx="12" cy="12" r="10"/>
+							<polyline points="12 6 12 12 16 14"/>
+						</svg>
+					</div>
+					<p>Siento burnout laboral y no sé cómo manejar el estrés crónico</p>
+				</div>
+
+				<div class="caso-card">
+					<div class="caso-icon">
+						<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+							<polyline points="22 4 12 14.01 9 11.01"/>
+						</svg>
+					</div>
+					<p>Quiero desarrollar mi autoestima y alcanzar mi potencial personal</p>
+				</div>
+
+				<div class="caso-card">
+					<div class="caso-icon">
+						<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<heart/>
+						</svg>
+					</div>
+					<p>Necesito acompañamiento para atravesar un tratamiento médico difícil</p>
+				</div>
+
+				<div class="caso-card">
+					<div class="caso-icon">
+						<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<path d="M12 2L2 7l10 5 10-5-10-5z"/>
+							<path d="M2 17l10 5 10-5M2 12l10 5 10-5"/>
+						</svg>
+					</div>
+					<p>Busco mejorar mis hábitos y tener una vida más saludable y equilibrada</p>
+				</div>
+			</div>
+
+			<div class="casos-cta">
+				<a href="#contacto" class="cta-button primary">Inicia tu proceso terapéutico</a>
+			</div>
+		</div>
+	</section>
+
+	<section id="nosotros" class="nosotros-section">
+		<div class="container">
+			<div class="section-header">
+				<span class="section-badge">Sobre Mí</span>
+				<h2>Psicóloga Clínica Especialista en Terapia Online</h2>
+			</div>
+			
+			<div class="nosotros-content">
+				<div class="nosotros-image">
+					<img src="/images/foto-psicologa.png" alt="Psicóloga Clínica" />
+				</div>
+				
+				<div class="nosotros-text">
+					<div class="sello-card">
+						<p class="badge">Mi sello como Psicóloga Clínica</p>
+						<h3>Mi camino hacia la psicología</h3>
+						<p>Mi camino hacia la psicología comenzó mucho antes de ingresar a la universidad. A lo largo de mi vida atravesé distintos procesos terapéuticos que me permitieron experimentar, desde el lugar de paciente, lo que significa sentirse comprendida —y también lo que ocurre cuando eso no sucede—. Esa vivencia marcó profundamente mi manera de ejercer hoy.</p>
+						<p>Decidí estudiar psicología impulsada por el deseo de comprender mi propio mundo interno. Con el tiempo, ese interés se amplió hacia la comprensión de las dinámicas familiares, los vínculos y los comportamientos humanos en su complejidad.</p>
+					</div>
+
+					<div class="enfoque-card">
+						<h4>Mi enfoque terapéutico</h4>
+						<p>En los últimos años de carrera tomé una decisión clara: convertirme en la psicóloga que en algún momento necesité. Cercana, rigurosa, ética y profundamente comprometida con cada proceso.</p>
+						<p>Mi trabajo integra distintos modelos psicoterapéuticos, pero siempre desde un enfoque personalizado. Cada persona es única, por lo tanto, cada terapia también lo es. Abordo de manera integral dimensiones como:</p>
+						<ul>
+							<li>Historia familiar y relaciones interpersonales</li>
+							<li>Vida social, académica y laboral</li>
+							<li>Patrones de comportamiento y creencias</li>
+							<li>Hábitos y metas personales</li>
+							<li>Duelos y heridas de infancia</li>
+							<li>Traumas y autoestima</li>
+							<li>Empoderamiento personal</li>
+						</ul>
+					</div>
+
+					<div class="enfoque-card">
+						<h4>Cómo trabajo contigo</h4>
+						<p>El eje de mi trabajo suele centrarse en el proceso emocional, promoviendo cambios conductuales y cognitivos que permitan mayor conciencia y regulación. Acompaño a cada consultante en la comprensión y elaboración de experiencias pasadas que hoy pueden estar generando malestar.</p>
+						<p>Ejerzo desde principios éticos sólidos y valores que también sostengo en mi vida personal. Mi compromiso es ofrecer un espacio seguro, respetuoso y profesional, donde puedas explorar, comprender y transformar aquello que hoy te limita. A nivel teórico y experiencial, me comprometo a entregarte herramientas concretas para que puedas desarrollarte con mayor seguridad, autonomía y bienestar emocional, físico y mental.</p>
+					</div>
+
+					<div class="firma">
+						<p>Camila Isabel Kusch de la Puente</p>
+						<span>Psicóloga Clínica Adultos</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="porque-section">
+		<div class="container">
+			<div class="section-header">
+				<h2>¿Por qué elegir mi acompañamiento terapéutico?</h2>
+			</div>
+
+			<div class="porque-grid">
+				<div class="porque-item">
+					<div class="porque-icon">
+						<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+							<polyline points="22 4 12 14.01 9 11.01"/>
+						</svg>
+					</div>
+					<h3>Especialización en Terapia Online</h3>
+				</div>
+
+				<div class="porque-item">
+					<div class="porque-icon">
+						<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+							<circle cx="9" cy="7" r="4"/>
+							<path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+							<path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+						</svg>
+					</div>
+					<h3>Trato cercano y empático</h3>
+				</div>
+
+				<div class="porque-item">
+					<div class="porque-icon">
+						<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+						</svg>
+					</div>
+					<h3>Enfoque basado en evidencia</h3>
+				</div>
+
+				<div class="porque-item">
+					<div class="porque-icon">
+						<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+							<path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+						</svg>
+					</div>
+					<h3>Confidencialidad absoluta</h3>
+				</div>
+
+				<div class="porque-item">
+					<div class="porque-icon">
+						<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<circle cx="12" cy="12" r="10"/>
+							<path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+							<line x1="12" y1="17" x2="12.01" y2="17"/>
+						</svg>
+					</div>
+					<h3>Adaptación a tus necesidades</h3>
+				</div>
+
+				<div class="porque-item">
+					<div class="porque-icon">
+						<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<path d="M12 2L2 7l10 5 10-5-10-5z"/>
+							<path d="M2 17l10 5 10-5M2 12l10 5 10-5"/>
+						</svg>
+					</div>
+					<h3>Compromiso con tu bienestar</h3>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section id="consulta" class="consulta-section">
+		<div class="container">
+			<div class="section-header">
+				<h2>Consulta Terapéutica Inicial - Sin Compromiso</h2>
+			</div>
+
+			<div class="consulta-grid">
+				<div class="consulta-item">
+					<div class="consulta-icon">
+						<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<path d="M9 11l3 3L22 4"/>
+							<path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+						</svg>
+					</div>
+					<h3>Evaluación de tus necesidades terapéuticas</h3>
+				</div>
+
+				<div class="consulta-item">
+					<div class="consulta-icon">
+						<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+							<polyline points="22 4 12 14.01 9 11.01"/>
+						</svg>
+					</div>
+					<h3>Exploración de tus objetivos personales</h3>
+				</div>
+
+				<div class="consulta-item">
+					<div class="consulta-icon">
+						<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<line x1="12" y1="1" x2="12" y2="23"/>
+							<path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+						</svg>
+					</div>
+					<h3>Plan de trabajo terapéutico personalizado</h3>
+				</div>
+
+				<div class="consulta-item">
+					<div class="consulta-icon">
+						<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+						</svg>
+					</div>
+					<h3>Explicación del proceso terapéutico</h3>
+				</div>
+			</div>
+
+			<div class="consulta-beneficios">
+				<div class="beneficio-badge">
+					<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<polyline points="20 6 9 17 4 12"/>
+					</svg>
+					<span>100% confidencial</span>
+				</div>
+				<div class="beneficio-badge">
+					<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<polyline points="20 6 9 17 4 12"/>
+					</svg>
+					<span>Sin compromiso</span>
+				</div>
+				<div class="beneficio-badge">
+					<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<polyline points="20 6 9 17 4 12"/>
+					</svg>
+					<span>Espacio seguro</span>
+				</div>
+			</div>
+
+			<div class="consulta-cta">
+				<a href="#contacto" class="cta-button primary">Agenda tu consulta terapéutica</a>
+			</div>
+		</div>
+	</section>
+
+	<div id="testimonios">
+		<Testimonios />
+	</div>
+	
+	<div id="contacto">
+		<ContactInfo />
+	</div>
+
+	<section id="convenios" class="convenios-section">
+		<div class="container">
+			<div class="section-header">
+				<span class="section-badge">Convenios Médicos</span>
+				<h2>Trabajo con las Principales Isapres del País</h2>
+				<p class="section-subtitle">Accede a terapia psicológica a través de tu seguro de salud</p>
+			</div>
+
+			<div class="convenios-carousel">
+				<div class="carousel-track">
+					{[...convenios, ...convenios].map((convenio) => (
+						<div class="convenio-logo">
+							<img src={convenio.logo} alt={`Logo ${convenio.name}`} loading="lazy" />
+						</div>
+					))}
+				</div>
+			</div>
+		</div>
+	</section>
+	<Footer />
+</Layout>
+
+<script>
+	let currentSlide = 0;
+	const slides = document.querySelectorAll('.slide');
+	const indicators = document.querySelectorAll('.indicator');
+	
+	function goToSlide(slideIndex) {
+		slides[currentSlide].classList.remove('active');
+		indicators[currentSlide].classList.remove('active');
+		
+		currentSlide = slideIndex;
+		
+		slides[currentSlide].classList.add('active');
+		indicators[currentSlide].classList.add('active');
+	}
+	
+	function nextSlide() {
+		const nextIndex = (currentSlide + 1) % slides.length;
+		goToSlide(nextIndex);
+	}
+	
+	// Auto-advance slider every 5 seconds
+	setInterval(nextSlide, 5000);
+</script>
+
+<style>
+	.hero {
+		min-height: 100vh;
+		display: flex;
+		align-items: center;
+		padding-top: 8rem;
+		position: relative;
+		overflow: hidden;
+		background: #0f1b23;
+		color: #ffffff;
+	}
+
+	@keyframes fadeInUp {
+		from {
+			opacity: 0;
+			transform: translateY(30px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	@keyframes pulse {
+		0%, 100% { transform: scale(1); }
+		50% { transform: scale(1.05); }
+	}
+
+	.hero-slider {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		width: 100%;
+		height: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		overflow: hidden;
+	}
+
+	.slide {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		opacity: 0;
+		transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+		transform: translateX(100px);
+		background-size: cover;
+		background-position: center;
+		background-repeat: no-repeat;
+	}
+
+	.slide::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(135deg, rgba(7, 15, 25, 0.65) 0%, rgba(35, 54, 71, 0.25) 100%);
+		z-index: 0;
+	}
+
+	.slide-one {
+		background-image: url('/images/slider.webp');
+	}
+
+	.slide-two {
+		background-image: url('/images/slider2.webp');
+	}
+
+	.slide-three {
+		background-image: url('/images/slider-3.webp');
+	}
+
+	.slide-four {
+		background-image: url('/images/slider-4.webp');
+	}
+
+	.slide.active {
+		opacity: 1;
+		transform: translateX(0);
+		animation: fadeInUp 1s ease-out;
+	}
+
+	.hero-content {
+		position: relative;
+		z-index: 1;
+		max-width: 80%;
+		color: #ffffff;
+		text-align: center;
+	}
+
+	.hero-content h1 {
+		font-size: 3rem;
+		font-weight: 300;
+		line-height: 1.3;
+		margin-bottom: 2rem;
+		color: #ffffff;
+		font-family: 'Raleway', sans-serif !important;
+		letter-spacing: -0.01em;
+		background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-clip: text;
+		animation: fadeInUp 1s ease-out;
+	}
+
+	.slider-indicators {
+		position: absolute;
+		bottom: 3rem;
+		left: 50%;
+		transform: translateX(-50%);
+		display: flex;
+		gap: 1rem;
+		z-index: 2;
+	}
+
+	.indicator {
+		width: 16px;
+		height: 16px;
+		border-radius: 50%;
+		border: 3px solid rgba(255, 255, 255, 0.3);
+		background: transparent;
+		cursor: pointer;
+		transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+		position: relative;
+		overflow: hidden;
+	}
+
+	.indicator::before {
+		content: '';
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		width: 0;
+		height: 0;
+		background: #56BAC0;
+		border-radius: 50%;
+		transform: translate(-50%, -50%);
+		transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+	}
+
+	.indicator.active::before {
+		width: 8px;
+		height: 8px;
+	}
+
+	.indicator.active {
+		border-color: #56BAC0;
+		transform: scale(1.2);
+		box-shadow: 0 0 20px rgba(86, 186, 192, 0.5);
+	}
+
+	.indicator:hover {
+		border-color: rgba(86, 186, 192, 0.8);
+		transform: scale(1.3);
+	}
+
+	.hero-container {
+		width: 100%;
+		max-width: 1400px;
+		margin: 0 auto;
+		padding: 2rem;
+		display: flex;
+		justify-content: flex-end;
+	}
+
+	.hero-content {
+		position: relative;
+		z-index: 1;
+		max-width: 58%;
+		color: #ffffff;
+		text-align: left;
+	}
+
+	.hero-content h1 {
+		color: #ffffff;
+		text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+	}
+
+	.badge {
+		display: inline-block;
+		padding: 0.75rem 1.5rem;
+		background: rgba(34, 211, 238, 0.2);
+		backdrop-filter: blur(10px);
+		border: 1px solid rgba(34, 211, 238, 0.4);
+		border-radius: 50px;
+		font-size: 0.875rem;
+		font-weight: 600;
+		letter-spacing: 0.5px;
+		margin-bottom: 2rem;
+		color: #22D3EE;
+		box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+	}
+
+	h1 {
+		font-size: 64px;
+		font-weight: 800;
+		margin-bottom: 1.5rem;
+		line-height: 1.2;
+		letter-spacing: -0.02em;
+		font-family: 'Inter', sans-serif !important;
+	}
+
+	/* Tablet */
+	@media (max-width: 1024px) {
+		h1 {
+			font-size: 48px;
+		}
+	}
+
+	/* Mobile */
+	@media (max-width: 768px) {
+		h1 {
+			font-size: 32px;
+			line-height: 1.3;
+		}
+	}
+
+	h2 {
+		font-size: 32px;
+		color: #464D57;
+		font-weight: 700;
+	}
+
+	.highlight {
+		color: #56BAC0;
+		text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+	}
+
+	.hero-checklist {
+		list-style: none;
+		padding: 0;
+		margin: 2rem 0;
+	}
+
+	.hero-checklist li {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		margin-bottom: 1rem;
+		font-size: 1.1rem;
+		color: #ffffff;
+	}
+
+	.hero-checklist svg {
+		flex-shrink: 0;
+		color: #22D3EE;
+		stroke-width: 2.5;
+	}
+
+	.subtitle {
+		font-size: clamp(1rem, 3vw, 1.25rem);
+		line-height: 1.6;
+		color: rgba(255, 255, 255, 0.95);
+		margin-bottom: 3rem;
+		max-width: 700px;
+		margin-left: 0;
+		margin-right: 0;
+		text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+	}
+
+	.cta-group {
+		display: flex;
+		gap: 1rem;
+		margin-top: 2.5rem;
+		justify-content: flex-start;
+	}
+
+	.cta-button {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.75rem;
+		padding: 1.25rem 2.5rem;
+		text-decoration: none;
+		border-radius: 50px;
+		font-weight: 700;
+		font-size: 1.1rem;
+		transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+		border: none;
+		position: relative;
+		overflow: hidden;
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+	}
+
+	.cta-button::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: -100%;
+		width: 100%;
+		height: 100%;
+		background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+		transition: left 0.6s;
+	}
+
+	.cta-button:hover::before {
+		left: 100%;
+	}
+
+	.cta-button.primary {
+		background: linear-gradient(135deg, #E1E3E5 0%, #FF9484 35%, #FFB8B0 100%);
+		color: #ffffff;
+		box-shadow: 0 15px 35px rgba(255, 148, 132, 0.3);
+		font-weight: 700;
+		position: relative;
+	}
+
+	.cta-button.primary:hover {
+		transform: translateY(-3px) scale(1.02);
+		box-shadow: 0 20px 40px rgba(255, 148, 132, 0.4);
+		background: linear-gradient(135deg, #D1D3D5 0%, #E57F73 35%, #FFA8A0 100%);
+	}
+
+	.stats {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+		gap: 2rem;
+		max-width: 600px;
+		margin: 0 auto;
+		padding: 2rem;
+		background: rgba(255, 255, 255, 0.05);
+		backdrop-filter: blur(10px);
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		border-radius: 20px;
+	}
+
+	.stat-item {
+		text-align: center;
+	}
+
+	.stat-number {
+		font-size: 2.5rem;
+		font-weight: 800;
+		background: linear-gradient(135deg, #1e3a8a 0%, #008BE1 100%);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-clip: text;
+		margin-bottom: 0.5rem;
+	}
+
+	.stat-label {
+		font-size: 0.875rem;
+		color: rgba(255, 255, 255, 0.7);
+		font-weight: 500;
+	}
+
+	.hero-stats {
+		display: flex;
+		justify-content: center;
+		gap: 3rem;
+		margin-top: 4rem;
+	}
+
+	.stat-item {
+		text-align: center;
+		padding: 1.5rem 2rem;
+		background: rgba(255, 255, 255, 0.8);
+		backdrop-filter: blur(10px);
+		border-radius: 16px;
+		border: 1px solid rgba(102, 126, 234, 0.2);
+		box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+	}
+
+	.stat-number {
+		font-size: 2.5rem;
+		font-weight: 800;
+		background: linear-gradient(135deg, #1e3a8a 0%, #008BE1 100%);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-clip: text;
+		line-height: 1;
+		margin-bottom: 0.5rem;
+	}
+
+	.stat-label {
+		font-size: 0.875rem;
+		color: #454655;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+	}
+
+	@media (max-width: 1024px) {
+		.hero-content {
+			max-width: 70%;
+		}
+	}
+
+	@media (max-width: 768px) {
+		.hero {
+			min-height: 100svh;
+			background: linear-gradient(135deg, #55B5BB 0%, #464D57 100%);
+			background-position: 30% center;
+		}
+
+		.hero-content {
+			max-width: 95%;
+			padding: 0 1rem;
+		}
+
+		.hero-content h1 {
+			font-size: 26px;
+			line-height: 1.35;
+		}
+
+		.slider-indicators {
+			bottom: 2rem;
+		}
+
+		.indicator {
+			width: 10px;
+			height: 10px;
+		}
+
+		.cta-group {
+			flex-direction: column;
+			align-items: center;
+			margin-top: 2rem;
+		}
+
+		.cta-button {
+			justify-content: center;
+		}
+	}
+
+	/* Sección Nosotros */
+	.nosotros-section {
+		padding: 6rem 2rem;
+		background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+	}
+
+	.nosotros-section .container {
+		max-width: 1200px;
+		margin: 0 auto;
+	}
+
+	.nosotros-section .section-header {
+		text-align: center;
+		margin-bottom: 4rem;
+	}
+
+	.nosotros-section .section-badge {
+		display: inline-block;
+		padding: 0.5rem 1.5rem;
+		background: linear-gradient(135deg, #56BAC0 0%, #FF9484 100%);
+		color: white;
+		border-radius: 50px;
+		font-size: 0.875rem;
+		font-weight: 600;
+		letter-spacing: 0.5px;
+		margin-bottom: 1rem;
+		text-transform: uppercase;
+	}
+
+	.nosotros-section h2 {
+		font-size: 32px;
+		margin-bottom: 1rem;
+		color: #464D57;
+		font-weight: 700;
+		letter-spacing: -0.02em;
+	}
+
+	.nosotros-section .section-subtitle {
+		font-size: 1.125rem;
+		color: #454655;
+		max-width: 700px;
+		margin: 0 auto;
+	}
+
+	.nosotros-content {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 4rem;
+		align-items: start;
+	}
+
+	.nosotros-image {
+		position: relative;
+		border-radius: 20px;
+		overflow: hidden;
+		box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+	}
+
+	.nosotros-image img {
+		width: 100%;
+		height: auto;
+		display: block;
+		object-fit: cover;
+	}
+
+	.nosotros-text p {
+		color: #475569;
+		line-height: 1.8;
+		margin-bottom: 1.5rem;
+		font-size: 1.05rem;
+	}
+
+	.nosotros-text strong {
+		color: #464D57;
+		font-weight: 700;
+	}
+
+	@media (max-width: 768px) {
+		.nosotros-section {
+			padding: 4rem 1.5rem;
+		}
+
+		.nosotros-content {
+			grid-template-columns: 1fr;
+			gap: 2rem;
+		}
+	}
+
+	/* Sección Convenios */
+	.convenios-section {
+		padding: 8rem 2rem;
+		background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+		position: relative;
+	}
+
+	.convenios-section .container {
+		max-width: 1200px;
+		margin: 0 auto;
+	}
+
+	.convenios-section .section-header {
+		text-align: center;
+		margin-bottom: 3rem;
+	}
+
+	.convenios-carousel {
+		margin-top: 3rem;
+		overflow: hidden;
+		position: relative;
+		max-width: 1200px;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	.carousel-track {
+		display: flex;
+		gap: 2rem;
+		animation: scrollLogos 18s linear infinite;
+		width: 200%;
+	}
+
+	@keyframes scrollLogos {
+		0% { transform: translateX(0); }
+		100% { transform: translateX(-50%); }
+	}
+
+	.convenio-logo {
+		flex: 0 0 260px;
+		max-width: 260px;
+		min-height: 100px;
+		margin: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: white;
+		border-radius: 18px;
+		padding: 1rem 1.5rem;
+		box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+		border: 1px solid rgba(86, 186, 192, 0.12);
+		transition: transform 0.3s ease, box-shadow 0.3s ease;
+	}
+
+	.convenio-logo img {
+		max-width: 100%;
+		height: auto;
+	}
+
+	@media (max-width: 992px) {
+		.convenio-logo {
+			flex: 0 0 calc(33.333% - 1rem);
+			max-width: calc(33.333% - 1rem);
+		}
+	}
+
+	@media (max-width: 768px) {
+		.convenio-logo {
+			flex: 0 0 calc(50% - 0.75rem);
+			max-width: calc(50% - 0.75rem);
+		}
+	}
+
+	@media (max-width: 480px) {
+		.convenio-logo {
+			flex: 0 0 100%;
+			max-width: 100%;
+		}
+	}
+
+	/* Sección Temas */
+	.temas-section {
+		padding: 8rem 2rem;
+		background: linear-gradient(135deg, #f0f9f8 0%, #e8f4f3 100%);
+		position: relative;
+	}
+
+	.temas-section .section-header {
+		text-align: center;
+		margin-bottom: 3rem;
+	}
+
+	.temas-section::before {
+		content: '';
+		position: absolute;
+		top: 10%;
+		right: -5%;
+		width: 40%;
+		height: 80%;
+		background: radial-gradient(circle, rgba(255, 148, 132, 0.08) 0%, transparent 70%);
+		border-radius: 50%;
+	}
+
+	.temas-categories {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+		gap: 2rem;
+		margin-top: 3rem;
+	}
+
+	.categoria-card {
+		background: white;
+		padding: 2.5rem;
+		border-radius: 24px;
+		border: 1px solid rgba(86, 186, 192, 0.1);
+		transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+		position: relative;
+		overflow: hidden;
+	}
+
+	.categoria-card::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		height: 4px;
+		background: linear-gradient(90deg, #56BAC0 0%, #FF9484 100%);
+		transform: scaleX(0);
+		transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+	}
+
+	.categoria-card:hover::before {
+		transform: scaleX(1);
+	}
+
+	.categoria-card:hover {
+		transform: translateY(-8px);
+		box-shadow: 0 20px 40px rgba(86, 186, 192, 0.15);
+	}
+
+	.categoria-icon {
+		width: 70px;
+		height: 70px;
+		margin: 0 auto 2rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: #56BAC0;
+		border-radius: 18px;
+		color: white;
+		transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+	}
+
+	.categoria-card:hover .categoria-icon {
+		transform: scale(1.1) rotate(5deg);
+	}
+
+	.categoria-card h3 {
+		color: #464D57;
+		font-size: 1.3rem;
+		font-weight: 700;
+		margin-bottom: 1.5rem;
+		text-align: center;
+	}
+
+	.categoria-card ul {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+
+	.categoria-card li {
+		color: #64748b;
+		font-size: 0.95rem;
+		line-height: 1.8;
+		margin-bottom: 0.5rem;
+		padding-left: 1.5rem;
+		position: relative;
+	}
+
+	.categoria-card li::before {
+		content: '•';
+		position: absolute;
+		left: 0;
+		color: #56BAC0;
+		font-weight: 700;
+		font-size: 1.2rem;
+	}
+
+	@media (max-width: 768px) {
+		.convenios-section,
+		.temas-section {
+			padding: 4rem 1.5rem;
+		}
+
+		.convenios-grid {
+			grid-template-columns: 1fr;
+			gap: 1.5rem;
+		}
+
+		.temas-categories {
+			grid-template-columns: 1fr;
+			gap: 1.5rem;
+		}
+	}
+
+	/* Sección Casos */
+	.casos-section {
+		padding: 8rem 2rem;
+		background: linear-gradient(135deg, #f8fafc 0%, #e8f4f3 100%);
+		position: relative;
+		overflow: hidden;
+	}
+
+	.casos-section::before {
+		content: '';
+		position: absolute;
+		top: -50%;
+		right: -10%;
+		width: 60%;
+		height: 200%;
+		background: linear-gradient(45deg, rgba(86, 186, 192, 0.05) 0%, rgba(255, 148, 132, 0.05) 100%);
+		transform: rotate(35deg);
+		z-index: 0;
+	}
+
+	.casos-section .container {
+		max-width: 1400px;
+		margin: 0 auto;
+	}
+
+	.casos-section .section-header {
+		text-align: center;
+		margin-bottom: 3rem;
+	}
+
+	.casos-section .section-subtitle {
+		font-size: 20px;
+		line-height: 17px;
+		color: #1B4292;
+	}
+
+	.casos-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+		gap: 1.5rem;
+		margin-top: 3rem;
+	}
+
+	.caso-card {
+		background: white;
+		padding: 2.5rem;
+		border-radius: 24px;
+		border: 1px solid rgba(86, 186, 192, 0.1);
+		transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+		text-align: center;
+		position: relative;
+		overflow: hidden;
+		backdrop-filter: blur(10px);
+	}
+
+	.caso-card::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		height: 4px;
+		background: linear-gradient(90deg, #56BAC0 0%, #FF9484 100%);
+		transform: scaleX(0);
+		transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+	}
+
+	.caso-card:hover::before {
+		transform: scaleX(1);
+	}
+
+	.caso-card:hover {
+		transform: translateY(-8px) rotateX(5deg);
+		box-shadow: 0 20px 40px rgba(86, 186, 192, 0.15);
+		border-color: #56BAC0;
+	}
+
+	.caso-icon {
+		width: 80px;
+		height: 80px;
+		margin: 0 auto 2rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: #56BAC0;
+		border-radius: 20px;
+		color: white;
+		font-size: 2rem;
+		transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+		position: relative;
+	}
+
+	.caso-icon::after {
+		content: '';
+		position: absolute;
+		top: -2px;
+		left: -2px;
+		right: -2px;
+		bottom: -2px;
+		background: #56BAC0;
+		border-radius: 20px;
+		z-index: -1;
+		opacity: 0;
+		transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+	}
+
+	.caso-card:hover .caso-icon {
+		transform: scale(1.1) rotate(5deg);
+	}
+
+	.caso-card:hover .caso-icon::after {
+		opacity: 0.3;
+	}
+
+	.caso-card p {
+		color: #464D57;
+		line-height: 1.6;
+		font-size: 0.95rem;
+		font-weight: 500;
+	}
+
+	.casos-cta {
+		text-align: center;
+		margin-top: 3rem;
+	}
+
+	/* Sección Por qué */
+	.porque-section {
+		padding: 8rem 2rem;
+		background: linear-gradient(135deg, #ffffff 0%, #f0f9f8 100%);
+		position: relative;
+	}
+
+	.porque-section .section-header {
+		text-align: center;
+		margin-bottom: 3rem;
+	}
+
+	.porque-section::after {
+		content: '';
+		position: absolute;
+		top: 10%;
+		left: -5%;
+		width: 40%;
+		height: 80%;
+		background: radial-gradient(circle, rgba(86, 186, 192, 0.08) 0%, transparent 70%);
+		border-radius: 50%;
+	}
+
+	.porque-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+		gap: 2rem;
+		margin-top: 3rem;
+	}
+
+	.porque-item {
+		background: white;
+		padding: 2rem;
+		border-radius: 16px;
+		border: 1px solid rgba(86, 186, 192, 0.2);
+		transition: all 0.3s ease;
+		text-align: center;
+	}
+
+	.porque-item:hover {
+		transform: translateY(-5px);
+		box-shadow: 0 10px 30px rgba(86, 186, 192, 0.15);
+		border-color: #56BAC0;
+	}
+
+	.porque-icon {
+		width: 64px;
+		height: 64px;
+		margin: 0 auto 1.5rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: linear-gradient(135deg, #56BAC0 0%, #FF9484 100%);
+		border-radius: 12px;
+		color: white;
+	}
+
+	.porque-item h3 {
+		color: #464D57;
+		font-weight: 700;
+		font-size: 1.1rem;
+		line-height: 1.5;
+	}
+
+	/* Sección Consulta */
+	.consulta-section {
+		padding: 8rem 2rem;
+		background: #E5ECF1;
+		color: #464D57;
+		position: relative;
+		overflow: hidden;
+	}
+
+	.consulta-section .section-header {
+		text-align: center;
+		margin-bottom: 3rem;
+	}
+
+	.consulta-section::before {
+		content: '';
+		position: absolute;
+		top: -20%;
+		right: -10%;
+		width: 60%;
+		height: 140%;
+		background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+		border-radius: 50%;
+		animation: float 6s ease-in-out infinite;
+	}
+
+	@keyframes float {
+		0%, 100% { transform: translateY(0px) rotate(0deg); }
+		50% { transform: translateY(-20px) rotate(180deg); }
+	}
+	.consulta-section h2 {
+		color: #464D57;
+	}
+
+	.consulta-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+		gap: 2rem;
+		margin-top: 3rem;
+	}
+
+	.consulta-item {
+		background: rgba(255, 255, 255, 0.05);
+		backdrop-filter: blur(10px);
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		border-radius: 16px;
+		padding: 2rem;
+		text-align: center;
+		transition: all 0.3s ease;
+	}
+
+	.consulta-item:hover {
+		background: rgba(255, 255, 255, 0.08);
+		border-color: rgba(102, 126, 234, 0.5);
+		transform: translateY(-5px);
+	}
+
+	.consulta-icon {
+		width: 64px;
+		height: 64px;
+		margin: 0 auto 1.5rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: #56BAC0;
+		border-radius: 12px;
+		color: white;
+	}
+
+	.consulta-item h3 {
+		color: white;
+		font-size: 1.1rem;
+		font-weight: 600;
+		line-height: 1.5;
+	}
+
+	.consulta-beneficios {
+		display: flex;
+		justify-content: center;
+		gap: 2rem;
+		margin-top: 3rem;
+		flex-wrap: wrap;
+	}
+
+	.beneficio-badge {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.75rem 1.5rem;
+		background: rgba(86, 186, 192, 0.2);
+		border: 1px solid rgba(86, 186, 192, 0.3);
+		border-radius: 50px;
+		color: #93c5fd;
+		font-weight: 600;
+		font-size: 0.95rem;
+	}
+
+	.beneficio-badge svg {
+		color: #56BAC0;
+	}
+
+	.consulta-cta {
+		text-align: center;
+		margin-top: 3rem;
+	}
+
+	@media (max-width: 768px) {
+		.casos-section,
+		.porque-section,
+		.consulta-section {
+			padding: 4rem 1.5rem;
+		}
+
+		.casos-grid,
+		.porque-grid,
+		.consulta-grid {
+			grid-template-columns: 1fr;
+			gap: 1.5rem;
+		}
+
+		.consulta-beneficios {
+			flex-direction: column;
+			align-items: center;
+		}
+	}
+/* SECCIÓN: Áreas de Atención */
+	.areas-section {
+		padding: 6rem 2rem;
+		background: #C8F0F0;
+		position: relative;
+	}
+
+	.areas-section .section-header {
+		text-align: center;
+		margin-bottom: 3rem;
+	}
+
+	.areas-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+		gap: 2rem;
+		margin-top: 3rem;
+	}
+
+	.area-card {
+		background: white;
+		padding: 2rem;
+		border-radius: 20px;
+		box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+		transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+		border: 2px solid transparent;
+		position: relative;
+		overflow: hidden;
+	}
+
+	.area-card::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		height: 4px;
+		background: linear-gradient(90deg, #56BAC0, #FF9484);
+		transform: scaleX(0);
+		transition: transform 0.4s ease;
+	}
+
+	.area-card:hover {
+		transform: translateY(-8px);
+		box-shadow: 0 20px 40px rgba(86, 186, 192, 0.15);
+		border-color: #56BAC0;
+	}
+
+	.area-card:hover::before {
+		transform: scaleX(1);
+	}
+
+	.area-icon {
+		width: 64px;
+		height: 64px;
+		margin: 0 auto 1.5rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: #FF7A63;
+		border-radius: 20px;
+		color: white;
+		font-size: 2rem;
+		transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+		position: relative;
+	}
+
+	.area-icon svg {
+		width: 36px;
+		height: 36px;
+	}
+
+	.area-card h3 {
+		color: #464D57;
+		font-size: 1.25rem;
+		font-weight: 600;
+		margin-bottom: 1rem;
+		font-family: 'Raleway', sans-serif !important;
+	}
+
+	.area-card p {
+		color: #64748b;
+		line-height: 1.6;
+		font-size: 0.95rem;
+	}
+
+	/* SECCIÓN: Servicios */
+	.servicios-section {
+		padding: 6rem 2rem;
+		background: #FFF0E6;
+		position: relative;
+	}
+
+	.servicios-section .section-header {
+		text-align: center;
+		margin-bottom: 3rem;
+	}
+
+	.servicios-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+		gap: 2.5rem;
+		margin-top: 3rem;
+	}
+
+	.servicio-card {
+		background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+		padding: 2.5rem;
+		border-radius: 24px;
+		box-shadow: 0 15px 35px rgba(86, 186, 192, 0.1);
+		transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+		border: 2px solid rgba(86, 186, 192, 0.1);
+		position: relative;
+	}
+
+	.servicio-card:hover {
+		transform: translateY(-10px) scale(1.02);
+		box-shadow: 0 25px 50px rgba(86, 186, 192, 0.2);
+		border-color: #56BAC0;
+	}
+
+	.servicio-image {
+		width: 100%;
+		height: 210px;
+		overflow: hidden;
+		border-radius: 16px;
+		margin-bottom: 2rem;
+	}
+
+	.servicio-image img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		transition: transform 0.4s ease;
+	}
+
+	.servicio-card:hover .servicio-image img {
+		transform: scale(1.05);
+	}
+
+	.servicio-card h3 {
+		color: #464D57;
+		font-size: 1.5rem;
+		font-weight: 600;
+		margin-bottom: 1.5rem;
+		font-family: 'Raleway', sans-serif !important;
+	}
+
+	.servicio-card p {
+		color: #64748b;
+		line-height: 1.7;
+		margin-bottom: 2rem;
+		font-size: 1rem;
+	}
+
+	.servicio-features {
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+	}
+
+	.servicio-features span {
+		color: #56BAC0;
+		font-size: 0.9rem;
+		font-weight: 500;
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+	}
+
+	@keyframes float {
+		0%, 100% { transform: translateY(0px); }
+		50% { transform: translateY(-10px); }
+	}
+
+</style>

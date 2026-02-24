@@ -1,0 +1,230 @@
+---
+import { getServicios } from '../lib/wordpress.js';
+
+type Servicio = {
+  slug: string;
+  title: { rendered: string };
+  excerpt?: { rendered: string };
+  content?: { rendered: string };
+  _embedded?: {
+    'wp:featuredmedia'?: Array<{ source_url: string }>;
+  };
+};
+
+const servicios = (await getServicios()) as Servicio[];
+
+const fallbackImages = [
+  'https://picsum.photos/seed/terapia-online/420/210',
+  'https://picsum.photos/seed/terapia-presencial/420/210',
+  'https://picsum.photos/seed/primera-sesion/420/210',
+];
+
+const getFeatureListHtml = (html: string = '') => {
+  const match = html.match(/<ul[\s\S]*?<\/ul>/i);
+  return match ? match[0] : '';
+};
+
+const getDescriptionHtml = (html: string = '') => html.replace(/<ul[\s\S]*?<\/ul>/gi, '').trim();
+---
+
+<section class="servicios-section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-badge">¿Cómo trabajo?</span>
+      <h2>Servicios</h2>
+      <p class="section-subtitle">Formatos de atención adaptados a tus necesidades y estilo de vida</p>
+    </div>
+    
+    <div class="servicios-grid">
+      {servicios && servicios.length > 0 ? (
+        servicios.map((servicio, index) => (
+          <article class="servicio-card" style={`animation-delay: ${index * 0.1}s`}>
+            <div class="servicio-image">
+              <img
+                src={servicio._embedded?.['wp:featuredmedia']?.[0]?.source_url || fallbackImages[index % fallbackImages.length]}
+                alt={servicio.title.rendered}
+                loading="lazy"
+              />
+            </div>
+            <h3 set:html={servicio.title.rendered} />
+            <div class="servicio-description" set:html={getDescriptionHtml(servicio.excerpt?.rendered || servicio.content?.rendered || '')} />
+            <div class="servicio-features" set:html={getFeatureListHtml(servicio.content?.rendered || servicio.excerpt?.rendered || '')} />
+          </article>
+        ))
+      ) : (
+        <p class="no-servicios">No hay servicios disponibles</p>
+      )}
+    </div>
+  </div>
+</section>
+
+<style>
+  .servicios-section {
+    padding: 6rem 2rem;
+    background: #FFF0E6;
+    position: relative;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .section-header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+  
+  .section-badge {
+    display: inline-block;
+    padding: 0.5rem 1.5rem;
+    background: rgba(86, 186, 192, 0.12);
+    color: #56BAC0;
+    border-radius: 50px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin-bottom: 1rem;
+  }
+  
+  h2 {
+    font-size: 32px;
+    margin-bottom: 1rem;
+    color: #464D57;
+    font-weight: 600;
+    font-family: 'Playfair Display', serif !important;
+  }
+  
+  .section-subtitle {
+    font-size: 1.125rem;
+    color: #4b5563;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .servicios-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+  }
+  
+  .servicio-card {
+    background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+    border-radius: 24px;
+    padding: 2rem;
+    border: 2px solid rgba(86, 186, 192, 0.1);
+    box-shadow: 0 15px 35px rgba(86, 186, 192, 0.1);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: fadeInUp 0.6s ease-out backwards;
+    position: relative;
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .servicio-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 25px 50px rgba(86, 186, 192, 0.2);
+    border-color: #56BAC0;
+  }
+
+  .servicio-card h3 {
+    font-size: 1.5rem;
+    color: #464D57;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    line-height: 1.3;
+    font-family: 'Raleway', sans-serif !important;
+  }
+
+  .servicio-description {
+    color: #64748b;
+    line-height: 1.7;
+    margin-bottom: 1.25rem;
+  }
+
+  .servicio-description :global(p) {
+    margin: 0;
+  }
+
+  .servicio-image {
+    aspect-ratio: 2 / 1;
+    width: 100%;
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    background: #eef3f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .servicio-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    transition: transform 0.4s ease;
+  }
+
+  .servicio-card:hover .servicio-image img {
+    transform: scale(1.05);
+  }
+
+  .servicio-description :global(ul),
+  .servicio-features :global(ul) {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .servicio-description :global(li),
+  .servicio-features :global(li) {
+    list-style: none;
+    color: #56BAC0;
+    font-weight: 700;
+    font-size: 0.95rem;
+    position: relative;
+    padding-left: 1rem;
+    margin: 0;
+  }
+
+  .servicio-description :global(li)::before,
+  .servicio-features :global(li)::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: #56BAC0;
+  }
+  
+  .no-servicios {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: #94a3b8;
+    font-size: 1.1rem;
+    padding: 3rem;
+  }
+  
+  @media (max-width: 768px) {
+    .servicios-section {
+      padding: 4rem 1.5rem;
+    }
+    
+    .servicios-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+  }
+</style>

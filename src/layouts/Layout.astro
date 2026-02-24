@@ -1,0 +1,138 @@
+---
+import WhatsAppFloat from '../components/WhatsAppFloat.astro';
+---
+
+<!doctype html>
+<html lang="es-CL">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/png" href="/favicon.png?v=2" />
+		<meta name="generator" content={Astro.generator} />
+		
+		<title>{Astro.props.title || 'Psicóloga Clínica | Psicoterapia Adulto | Terapia Online'}</title>
+		<meta name="description" content="Psicóloga clínica especialista en terapia online para adultos. Acompañamiento terapéutico en ansiedad, depresión, traumas, relaciones y desarrollo personal. Consulta inicial sin compromiso." />
+		<meta name="keywords" content="psicóloga clínica, psicoterapia adulto, terapia online, ansiedad, depresión, traumas, relaciones, desarrollo personal, salud mental, psicólogo, terapia psicológica" />
+		
+		<meta name="robots" content="index, follow" />
+		<meta name="author" content="Psicóloga Clínica" />
+		<meta name="geo.region" content="CL" />
+		<meta name="geo.placename" content="Chile" />
+		<link rel="canonical" href="https://psicologa-clinica.cl/" />
+		
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content="Psicóloga Clínica | Psicoterapia Adulto | Terapia Online" />
+		<meta property="og:description" content="Psicóloga clínica especialista en terapia online para adultos. Acompañamiento terapéutico en ansiedad, depresión, traumas y desarrollo personal." />
+		<meta property="og:url" content="https://psicologa-clinica.cl/" />
+		<meta property="og:locale" content="es_CL" />
+		
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content="Psicóloga Clínica | Terapia Online" />
+		<meta name="twitter:description" content="Psicóloga clínica especialista en terapia online para adultos. Acompañamiento terapéutico integral." />
+		
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Poppins:wght@400;500;600;700&family=Raleway:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+		
+		<script type="application/ld+json">
+		{
+			"@context": "https://schema.org",
+			"@type": "PsychologicalService",
+			"name": "Psicóloga Clínica - Psicoterapia Adulto",
+			"description": "Psicóloga clínica especialista en terapia online para adultos. Acompañamiento terapéutico en ansiedad, depresión, traumas, relaciones y desarrollo personal.",
+			"url": "https://psicologa-clinica.cl",
+			"logo": "https://psicologa-clinica.cl/logo-psicologa.png",
+			"image": "https://psicologa-clinica.cl/images/foto-psicologa.png",
+			"serviceType": "Psicoterapia para Adultos",
+			"areaServed": {
+				"@type": "Country",
+				"name": "Chile"
+			},
+			"hasOfferCatalog": {
+				"@type": "OfferCatalog",
+				"name": "Servicios de Psicoterapia",
+				"itemListElement": [
+					{
+						"@type": "Offer",
+						"itemOffered": {
+							"@type": "Service",
+							"name": "Terapia Online",
+							"description": "Sesiones de psicoterapia online para adultos"
+						}
+					},
+					{
+						"@type": "Offer",
+						"itemOffered": {
+							"@type": "Service",
+							"name": "Trastornos del Estado de Ánimo",
+							"description": "Tratamiento de ansiedad, depresión y trastornos de pánico"
+						}
+					},
+					{
+						"@type": "Offer",
+						"itemOffered": {
+							"@type": "Service",
+							"name": "Terapia de Relaciones",
+							"description": "Acompañamiento en conflictos familiares y de pareja"
+						}
+					}
+				]
+			}
+		}
+		</script>
+	</head>
+	<body>
+		<slot />
+		<WhatsAppFloat />
+	</body>
+</html>
+
+<style is:global>
+	* {
+		box-sizing: border-box;
+	}
+
+	html {
+		scroll-behavior: smooth;
+	}
+
+	html,
+	body {
+		margin: 0;
+		padding: 0;
+		width: 100%;
+		height: 100%;
+		font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+	}
+
+	h1, h2, h3, h4, h5, h6 {
+		font-family: 'Raleway', sans-serif !important;
+		font-weight: 500;
+		letter-spacing: -0.01em;
+	}
+
+	body * {
+		font-family: 'Inter', sans-serif !important;
+	}
+
+	/* Playfair Display para títulos de secciones específicas */
+	.section-header h2 {
+		font-family: 'Playfair Display', serif !important;
+		font-weight: 600;
+		letter-spacing: -0.01em;
+	}
+
+	/* Raleway para elementos específicos */
+	.hero-content h1 {
+		font-family: 'Raleway', sans-serif !important;
+		font-weight: 300;
+		letter-spacing: -0.01em;
+	}
+
+	/* Poppins para elementos específicos */
+	.cta-button, .nav-link.cta, .badge, .section-badge, .beneficio-badge {
+		font-family: 'Poppins', sans-serif !important;
+	}
+</style>

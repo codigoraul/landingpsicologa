@@ -1,0 +1,679 @@
+---
+const rawBase = import.meta.env.BASE_URL ?? '/';
+const basePath = rawBase === '/' ? '' : rawBase.replace(/\/$/, '');
+const actionUrl = `${basePath}/contacto.php`;
+
+const status = Astro.url.searchParams.get('status');
+const statusMessages: Record<string, { type: 'success' | 'error', text: string }> = {
+  success: { type: 'success', text: '¡Mensaje enviado exitosamente! Nos pondremos en contacto contigo pronto.' },
+  missing_fields: { type: 'error', text: 'Por favor completa todos los campos obligatorios.' },
+  invalid_email: { type: 'error', text: 'El correo electrónico ingresado no es válido.' },
+  mail_failed: { type: 'error', text: 'No se pudo enviar el mensaje. Por favor intenta nuevamente o contáctanos por teléfono.' },
+};
+const statusData = status ? statusMessages[status] : null;
+---
+
+<section class="contact-section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-badge">Contacto</span>
+      <h2>Agenda tu Consulta</h2>
+      <p class="section-subtitle">Estamos listos para ayudarte con tu caso</p>
+    </div>
+
+    <div class="contact-wrapper">
+      <!-- Columna Izquierda: Información de Contacto -->
+      <div class="contact-info">
+        <h3>Información de Contacto</h3>
+        <p class="info-description">Contáctanos por cualquiera de estos medios. Te responderemos a la brevedad.</p>
+
+        <div class="contact-items">
+          <div class="contact-item">
+            <div class="icon-wrapper">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+            </div>
+            <div class="item-content">
+              <h4>Email</h4>
+              <a href="mailto:" id="contact-email">Cargando...</a>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="icon-wrapper">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+              </svg>
+            </div>
+            <div class="item-content">
+              <h4>Teléfono</h4>
+              <a href="tel:" id="contact-phone">Cargando...</a>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="icon-wrapper">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                <circle cx="12" cy="10" r="3"/>
+              </svg>
+            </div>
+            <div class="item-content">
+              <h4>Dirección</h4>
+              <p id="contact-address">Santa Magdalena N° 75, Providencia</p>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="icon-wrapper">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="12 6 12 12 16 14"/>
+              </svg>
+            </div>
+            <div class="item-content">
+              <h4>Horario</h4>
+              <p id="contact-hours">Lunes a Viernes 9:00 - 18:00</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Columna Derecha: Formulario de Contacto -->
+      <div class="form-column">
+        <h3>Formulario de Contacto</h3>
+        
+        <div class="contact-form-wrapper">
+          {statusData && (
+          <div class={`status-message ${statusData.type === 'success' ? 'status-success' : 'status-error'}`}>
+            {statusData.text}
+          </div>
+        )}
+        
+        <form class="contact-form" id="contactForm" method="POST">
+          <input type="text" name="_gotcha" class="honeypot" tabindex="-1" autocomplete="off" />
+          
+          <div class="form-group">
+            <label for="nombre">Nombre Completo *</label>
+            <input type="text" id="nombre" name="nombre" required placeholder="Juan Pérez">
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="email-form">Email *</label>
+              <input type="email" id="email-form" name="email" required placeholder="juan@ejemplo.com">
+            </div>
+
+            <div class="form-group">
+              <label for="telefono-form">Teléfono</label>
+              <input type="tel" id="telefono-form" name="telefono" placeholder="+56 9 1234 5678">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="asunto">Asunto</label>
+            <input type="text" id="asunto" name="asunto" placeholder="¿En qué podemos ayudarte?">
+          </div>
+
+          <div class="form-group">
+            <label for="mensaje">Mensaje *</label>
+            <textarea id="mensaje" name="mensaje" rows="5" required placeholder="Cuéntanos sobre tu caso..."></textarea>
+          </div>
+
+          <button type="submit" class="submit-button">
+            <span>Enviar Consulta</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="22" y1="2" x2="11" y2="13"/>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+            </svg>
+          </button>
+        </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sección de Mapa -->
+    <div class="map-section">
+      <div class="map-header">
+        <h3 style="color: #454655;">Ubicación de Oficina</h3>
+        <p style="color: #454655;">Visítanos en nuestra oficina ubicada en el corazón de Providencia</p>
+      </div>
+      
+      <div class="map-full-width">
+        <iframe 
+          src="https://www.google.com/maps?q=Santa+Magdalena+75,+Providencia,+Santiago&z=17&output=embed"
+          width="100%" 
+          height="450" 
+          style="border:0; border-radius: 16px;" 
+          allowfullscreen="" 
+          loading="lazy" 
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Cargar datos de contacto desde WordPress
+  fetch('https://protrabajo.cl/admin/wp-json/wp/v2/contact-info')
+    .then(response => response.json())
+    .then(data => {
+      if (data && data.acf) {
+        const emailEl = document.getElementById('contact-email');
+        const phoneEl = document.getElementById('contact-phone');
+        
+        if (emailEl && data.acf.email) {
+          emailEl.textContent = data.acf.email;
+          emailEl.href = `mailto:${data.acf.email}`;
+        }
+        
+        if (phoneEl && data.acf.telefono) {
+          phoneEl.textContent = data.acf.telefono;
+          phoneEl.href = `tel:${data.acf.telefono}`;
+        }
+      }
+    })
+    .catch(error => console.error('Error:', error));
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const basePath = window.location.pathname.includes('/prueba') ? '/prueba' : '';
+    const form = document.getElementById('contactForm') as HTMLFormElement;
+    const formWrapper = document.querySelector('.contact-form-wrapper');
+    
+    if (form && formWrapper) {
+      form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        // Mostrar estado de carga
+        const submitButton = form.querySelector('.submit-button') as HTMLButtonElement;
+        if (submitButton) {
+          const originalText = submitButton.innerHTML;
+          submitButton.innerHTML = '<span>Enviando...</span>';
+          submitButton.disabled = true;
+          
+          // Obtener datos del formulario
+          const formData = new FormData(form);
+          
+          try {
+            const response = await fetch('https://formspree.io/f/xeelgkna', {
+              method: 'POST',
+              body: formData,
+              headers: {
+                'Accept': 'application/json'
+              }
+            });
+            
+            const result = await response.json();
+            
+            if (response.ok) {
+              // Guardar datos como backup (por si el correo no llega)
+              const formDataCopy = {
+                nombre: formData.get('nombre'),
+                email: formData.get('email'), 
+                telefono: formData.get('telefono'),
+                mensaje: formData.get('mensaje'),
+                timestamp: new Date().toISOString()
+              };
+              
+              // Guardar en localStorage
+              const submissions = JSON.parse(localStorage.getItem('protrabajo_form_data') || '[]');
+              submissions.push(formDataCopy);
+              localStorage.setItem('protrabajo_form_data', JSON.stringify(submissions));
+              
+              // Limpiar formulario
+              form.reset();
+              
+              // Mostrar mensaje de éxito
+              const message = document.createElement('div');
+              message.style.cssText = `
+                padding: 1.5rem 2rem !important;
+                border-radius: 12px !important;
+                margin-bottom: 2rem !important;
+                font-size: 1.3rem !important;
+                font-weight: 700 !important;
+                line-height: 1.6 !important;
+                text-align: center !important;
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3) !important;
+                border: 2px solid rgba(16, 185, 129, 0.5) !important;
+                background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+                color: #ffffff !important;
+                text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+                animation: slideInDown 0.5s ease-out !important;
+              `;
+              message.textContent = '✅ ¡Gracias por contactarnos! Hemos recibido tu mensaje y te responderemos a la brevedad.';
+              
+              // Insertar mensaje
+              formWrapper.insertBefore(message, form);
+              
+              // Remover mensaje después de 8 segundos
+              setTimeout(() => {
+                if (message.parentNode) {
+                  message.parentNode.removeChild(message);
+                }
+              }, 8000);
+            } else {
+              // Error de Web3Forms
+              throw new Error(result.message || 'Error al enviar formulario');
+            }
+            
+          } catch (error) {
+            console.error('Error al enviar formulario:', error);
+            
+            // Mostrar mensaje de error
+            const errorMessage = document.createElement('div');
+            errorMessage.style.cssText = `
+              padding: 1.5rem 2rem !important;
+              border-radius: 12px !important;
+              margin-bottom: 2rem !important;
+              font-size: 1.3rem !important;
+              font-weight: 700 !important;
+              line-height: 1.6 !important;
+              text-align: center !important;
+              box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3) !important;
+              border: 2px solid rgba(239, 68, 68, 0.5) !important;
+              background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+              color: #ffffff !important;
+              text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+              animation: slideInDown 0.5s ease-out !important;
+            `;
+            errorMessage.textContent = 'No se pudo enviar el mensaje. Por favor intenta nuevamente.';
+            
+            // Insertar mensaje al principio del wrapper
+            formWrapper.insertBefore(errorMessage, form);
+            
+            // Remover mensaje después de 5 segundos
+            setTimeout(() => {
+              if (errorMessage.parentNode) {
+                errorMessage.parentNode.removeChild(errorMessage);
+              }
+            }, 5000);
+          } finally {
+            // Restaurar botón
+            submitButton.innerHTML = originalText;
+            submitButton.disabled = false;
+          }
+        }
+      });
+    }
+  });
+</script>
+
+<style>
+  .honeypot {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .status-message {
+    padding: 1.5rem 2rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+    line-height: 1.6;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    animation: slideInDown 0.5s ease-out;
+  }
+
+  @keyframes slideInDown {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .status-success {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    border: 2px solid rgba(16, 185, 129, 0.5);
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 1.3rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+
+  .status-error {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    border: 2px solid rgba(239, 68, 68, 0.5);
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 1.3rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+  
+  .contact-section {
+    padding: 6rem 2rem;
+    background: #F0FAFB;
+    color: #2c313a;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .contact-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 148, 132, 0.4), transparent);
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .section-header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+  
+  .section-badge {
+    display: inline-block;
+    padding: 0.5rem 1.5rem;
+    background: rgba(255, 148, 132, 0.15);
+    border: 1px solid rgba(255, 148, 132, 0.3);
+    border-radius: 50px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    color: #FF9484;
+  }
+  
+  h2 {
+    font-size: 32px;
+    margin-bottom: 1rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: #2c313a;
+  }
+  
+  .section-subtitle {
+    font-size: 1.125rem;
+    color: #4a4f59;
+  }
+
+  /* Layout de 2 columnas */
+  .contact-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  /* Columna Izquierda - Info de Contacto */
+  .contact-info h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+  }
+
+  .info-description {
+    color: #4a4f59;
+    margin-bottom: 2rem;
+    line-height: 1.7;
+  }
+
+  .contact-items {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+  }
+
+  .contact-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(255, 148, 132, 0.15);
+    border-color: rgba(255, 148, 132, 0.4);
+  }
+
+  .icon-wrapper {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:#34526A;
+    border-radius: 14px;
+    color: white;
+  }
+
+  .item-content h4 {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #7a808c;
+    margin-bottom: 0.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .item-content a {
+    color: #2c313a;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+
+  .item-content a:hover {
+    color: #FF9484;
+  }
+
+  .item-content p {
+    margin: 0;
+    color: #1a1a1a;
+    font-size: 1rem;
+  }
+
+  /* Columna Derecha - Formulario */
+  .form-column h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+    color: #2c313a;
+  }
+
+  .contact-form-wrapper {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 24px;
+    padding: 2.5rem;
+    margin-top: 40px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.08);
+  }
+
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .form-group label {
+    font-size: 0.955rem;
+    font-weight: 600;
+    color: #191b20;
+    letter-spacing: 0.3px;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    padding: 0.875rem 1rem;
+    background: #f6f7f9;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 10px;
+    color: #1a1a1a;
+    font-size: 1rem;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.3s ease;
+  }
+
+  .form-group input::placeholder,
+  .form-group textarea::placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus {
+    outline: none;
+    background: #ffffff;
+    border-color: #FF9484;
+    box-shadow: 0 0 0 3px rgba(255, 148, 132, 0.25);
+  }
+
+  .form-group textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+
+  .submit-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, #E1E3E5 0%, #FF9484 35%, #FFB8B0 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .submit-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 35px rgba(255, 148, 132, 0.35);
+  }
+
+  .submit-button:active {
+    transform: translateY(0);
+  }
+
+  @media (max-width: 968px) {
+    .contact-wrapper {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .form-row {
+      grid-template-columns: 1fr;
+    }
+
+    .contact-form-wrapper {
+      padding: 2rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .contact-section {
+      padding: 4rem 1.5rem;
+    }
+
+    .contact-item {
+      flex-direction: column;
+      text-align: center;
+      align-items: center;
+    }
+  }
+
+  /* Estilos para la sección de mapa */
+  .map-section {
+    margin-top: 4rem;
+    padding-top: 3rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .map-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .map-header h3 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #ffffff;
+  }
+
+  .map-header p {
+    font-size: 1.125rem;
+    color: rgba(255, 255, 255, 0.7);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .map-full-width {
+    position: relative;
+    overflow: hidden;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    background: #f0f0f0;
+  }
+
+  .map-full-width iframe {
+    display: block;
+    width: 100%;
+    height: 450px;
+  }
+
+  /* Responsive para mapa */
+  @media (max-width: 768px) {
+    .map-section {
+      margin-top: 2rem;
+      padding-top: 2rem;
+    }
+
+    .map-header h3 {
+      font-size: 1.5rem;
+    }
+
+    .map-full-width iframe {
+      height: 300px;
+    }
+  }
+</style>
