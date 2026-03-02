@@ -29,7 +29,7 @@ jobs:
           WORDPRESS_API_URL: ${{ secrets.WORDPRESS_API_URL }}
 
       - name: Deploy via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.6.0
+        uses: SamKirkland/FTP-Deploy-Action@v4
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
