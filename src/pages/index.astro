@@ -1,4 +1,4 @@
----
+	---
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
@@ -71,7 +71,7 @@ const convenios = [
 			<div class="section-header">
 				<span class="section-badge">¿En qué puedo ayudarte?</span>
 				<h2>Áreas de atención</h2>
-				<p>Acompañamiento terapéutico profesional en las áreas que necesitas para tu bienestar emocional</p>
+				<p style="font-size: 1.1rem; color:#D96B58">Acompañamiento terapéutico profesional en las áreas que necesitas para tu bienestar emocional</p>
 			</div>
 			
 			<div class="areas-grid">
@@ -389,7 +389,7 @@ const convenios = [
 			
 			<div class="nosotros-content">
 				<div class="nosotros-image">
-					<img src="/images/foto-psicologa.png" alt="Psicóloga Clínica" />
+					<img src="/images/camila-prueba.jpg" alt="Psicóloga Clínica" />
 				</div>
 				
 				<div class="nosotros-text">
@@ -415,16 +415,16 @@ const convenios = [
 						</ul>
 					</div>
 
-					<div class="enfoque-card">
-						<h4>Cómo trabajo contigo</h4>
-						<p>El eje de mi trabajo suele centrarse en el proceso emocional, promoviendo cambios conductuales y cognitivos que permitan mayor conciencia y regulación. Acompaño a cada consultante en la comprensión y elaboración de experiencias pasadas que hoy pueden estar generando malestar.</p>
-						<p>Ejerzo desde principios éticos sólidos y valores que también sostengo en mi vida personal. Mi compromiso es ofrecer un espacio seguro, respetuoso y profesional, donde puedas explorar, comprender y transformar aquello que hoy te limita. A nivel teórico y experiencial, me comprometo a entregarte herramientas concretas para que puedas desarrollarte con mayor seguridad, autonomía y bienestar emocional, físico y mental.</p>
-					</div>
+				</div>
+			</div>
 
-					<div class="firma">
-						<p>Camila Isabel Kusch de la Puente</p>
-						<span>Psicóloga Clínica Adultos</span>
-					</div>
+			<div class="nosotros-extra">
+				<h4>Cómo trabajo contigo</h4>
+				<p>El eje de mi trabajo suele centrarse en el proceso emocional, promoviendo cambios conductuales y cognitivos que permitan mayor conciencia y regulación. Acompaño a cada consultante en la comprensión y elaboración de experiencias pasadas que hoy pueden estar generando malestar.</p>
+				<p>Ejerzo desde principios éticos sólidos y valores que también sostengo en mi vida personal. Mi compromiso es ofrecer un espacio seguro, respetuoso y profesional, donde puedas explorar, comprender y transformar aquello que hoy te limita. A nivel teórico y experiencial, me comprometo a entregarte herramientas concretas para que puedas desarrollarte con mayor seguridad, autonomía y bienestar emocional, físico y mental.</p>
+				<div class="firma">
+					<p>Camila Isabel Kusch de la Puente</p>
+					<span>Psicóloga Clínica Adultos</span>
 				</div>
 			</div>
 		</div>
@@ -631,6 +631,11 @@ const convenios = [
 </script>
 
 <style>
+	@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
+
+	body {
+		font-family: 'Inter', sans-serif;
+	}
 	.hero {
 		min-height: 100vh;
 		display: flex;
@@ -856,6 +861,8 @@ const convenios = [
 		font-size: 32px;
 		color: #464D57;
 		font-weight: 700;
+		font-family: 'Cormorant Garamond', serif !important;
+		letter-spacing: -0.02em;
 	}
 
 	.highlight {
@@ -1089,19 +1096,32 @@ const convenios = [
 		text-transform: uppercase;
 	}
 
+	.nosotros-section .section-header h2 {
+		margin: 1rem auto;
+		max-width: 720px;
+		font-size: 32px;
+		font-weight: 700;
+		color: #464D57 !important;
+		letter-spacing: -0.01em;
+		line-height: 1.25;
+		font-family: 'Cormorant Garamond', serif !important;
+	}
+
 	.nosotros-section h2 {
 		font-size: 32px;
 		margin-bottom: 1rem;
 		color: #464D57;
 		font-weight: 700;
 		letter-spacing: -0.02em;
+		font-family: 'Playfair Display', serif !important;
 	}
 
 	.nosotros-section .section-subtitle {
 		font-size: 1.125rem;
-		color: #454655;
-		max-width: 700px;
+		color: #D96B58;
+		max-width: 540px;
 		margin: 0 auto;
+		font-family: 'Inter', sans-serif;
 	}
 
 	.nosotros-content {
@@ -1137,6 +1157,50 @@ const convenios = [
 		font-weight: 700;
 	}
 
+	.nosotros-extra {
+		margin-top: 3rem;
+		padding: 3rem;
+		background: white;
+		border-radius: 24px;
+		box-shadow: 0 20px 50px rgba(71, 85, 105, 0.12);
+		border: 1px solid rgba(86, 186, 192, 0.12);
+		column-count: 2;
+		column-gap: 3rem;
+		column-rule: 1px solid rgba(86, 186, 192, 0.15);
+	}
+
+	.nosotros-extra h4 {
+		font-size: 1.5rem;
+		color: #1b2640;
+		margin-bottom: 1.5rem;
+		font-family: 'Cormorant Garamond', serif;
+		column-span: all;
+	}
+
+	.nosotros-extra p {
+		color: #475569;
+		line-height: 1.9;
+		font-size: 1.05rem;
+		margin-bottom: 1.5rem;
+		break-inside: avoid;
+	}
+
+	.nosotros-extra .firma {
+		margin-top: 2rem;
+		column-span: all;
+	}
+
+	.nosotros-extra .firma p {
+		font-weight: 600;
+		color: #1b2640;
+		margin-bottom: 0.35rem;
+	}
+
+	.nosotros-extra .firma span {
+		color: #64748b;
+		font-size: 0.95rem;
+	}
+
 	@media (max-width: 768px) {
 		.nosotros-section {
 			padding: 4rem 1.5rem;
@@ -1145,6 +1209,12 @@ const convenios = [
 		.nosotros-content {
 			grid-template-columns: 1fr;
 			gap: 2rem;
+		}
+
+		.nosotros-extra {
+			padding: 2rem;
+			column-count: 1;
+			column-rule: none;
 		}
 	}
 
@@ -1383,19 +1453,15 @@ const convenios = [
 	.casos-section .section-header {
 		text-align: center;
 		margin-bottom: 3rem;
-	}
-
-	.casos-section .section-subtitle {
-		font-size: 20px;
-		line-height: 17px;
-		color: #1B4292;
+		gap: 1.5rem;
 	}
 
 	.casos-grid {
 		display: grid;
 		grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-		gap: 1.5rem;
-		margin-top: 3rem;
+		gap: 2rem;
+		position: relative;
+		z-index: 1;
 	}
 
 	.caso-card {
@@ -1729,7 +1795,7 @@ const convenios = [
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		background: #FF7A63;
+		background: #9BD5D6;
 		border-radius: 20px;
 		color: white;
 		font-size: 2rem;
@@ -1744,16 +1810,17 @@ const convenios = [
 
 	.area-card h3 {
 		color: #464D57;
-		font-size: 1.25rem;
+		font-size: 1.4rem;
 		font-weight: 600;
 		margin-bottom: 1rem;
-		font-family: 'Raleway', sans-serif !important;
+		font-family: 'Inter', sans-serif !important;
 	}
 
 	.area-card p {
 		color: #64748b;
 		line-height: 1.6;
 		font-size: 0.95rem;
+		font-family: 'Inter', sans-serif;
 	}
 
 	/* SECCIÓN: Servicios */
@@ -1819,7 +1886,7 @@ const convenios = [
 	}
 
 	.servicio-card p {
-		color: #64748b;
+		color: #D96B58;
 		line-height: 1.7;
 		margin-bottom: 2rem;
 		font-size: 1rem;
