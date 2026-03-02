@@ -1,6 +1,6 @@
-# ProTrabajo Landing Page
+# Landing Psicóloga Camila del Álamo
 
-Landing page autoadministrable con **Astro** + **WordPress Headless** para asesoría legal laboral.
+Landing page autoadministrable con **Astro** + **WordPress Headless** enfocada en los servicios psicológicos de Camila del Álamo.
 
 ## 🎯 Características
 
