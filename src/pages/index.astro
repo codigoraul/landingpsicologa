@@ -40,7 +40,7 @@ const convenios = [
 					<h1>Sanar no es olvidar lo vivido;<br>es aprender a resignificarlo para vivir con mayor claridad, equilibrio y sentido.</h1>
 				</div>
 			</div>
-			<div class="slide">
+			<div class="slide slide-five">
 				<div class="hero-content">
 					<h1>Si estás aquí, probablemente algo dentro de ti<br><span class="highlight">ya sabe que es momento de hacerlo distinto.</span></h1>
 					<div class="cta-group">
@@ -53,6 +53,11 @@ const convenios = [
 					</div>
 				</div>
 			</div>
+			<div class="slide slide-six">
+				<div class="hero-content">
+					<h1>Tu bienestar emocional es una prioridad.<br><span class="highlight">Agendar una sesión es el primer paso hacia ese cambio.</span></h1>
+				</div>
+			</div>
 		</div>
 		
 		<div class="slider-indicators">
@@ -61,6 +66,7 @@ const convenios = [
 			<button class="indicator" onclick="goToSlide(2)"></button>
 			<button class="indicator" onclick="goToSlide(3)"></button>
 			<button class="indicator" onclick="goToSlide(4)"></button>
+			<button class="indicator" onclick="goToSlide(5)"></button>
 		</div>
 	</section>
 
@@ -607,27 +613,52 @@ const convenios = [
 </Layout>
 
 <script>
-	let currentSlide = 0;
-	const slides = document.querySelectorAll('.slide');
-	const indicators = document.querySelectorAll('.indicator');
-	
-	function goToSlide(slideIndex) {
-		slides[currentSlide].classList.remove('active');
-		indicators[currentSlide].classList.remove('active');
-		
-		currentSlide = slideIndex;
-		
-		slides[currentSlide].classList.add('active');
-		indicators[currentSlide].classList.add('active');
-	}
-	
-	function nextSlide() {
-		const nextIndex = (currentSlide + 1) % slides.length;
-		goToSlide(nextIndex);
-	}
-	
-	// Auto-advance slider every 5 seconds
-	setInterval(nextSlide, 5000);
+	document.addEventListener('DOMContentLoaded', () => {
+		let currentSlide = 0;
+		const slides = document.querySelectorAll('.slide');
+		const indicators = document.querySelectorAll('.indicator');
+		const slider = document.querySelector('.hero-slider');
+		let autoSlideInterval;
+
+		function goToSlide(slideIndex) {
+			if (!slides[slideIndex]) {
+				return;
+			}
+			slides[currentSlide].classList.remove('active');
+			indicators[currentSlide].classList.remove('active');
+			currentSlide = slideIndex;
+			slides[currentSlide].classList.add('active');
+			indicators[currentSlide].classList.add('active');
+		}
+
+		function nextSlide() {
+			const nextIndex = (currentSlide + 1) % slides.length;
+			goToSlide(nextIndex);
+		}
+
+		function startAutoSlide() {
+			stopAutoSlide();
+			autoSlideInterval = setInterval(nextSlide, 5000);
+		}
+
+		function stopAutoSlide() {
+			if (autoSlideInterval) {
+				clearInterval(autoSlideInterval);
+			}
+		}
+
+		indicators.forEach((indicator, index) => {
+			indicator.addEventListener('click', () => {
+				goToSlide(index);
+				startAutoSlide();
+			});
+		});
+
+		slider?.addEventListener('mouseenter', stopAutoSlide);
+		slider?.addEventListener('mouseleave', startAutoSlide);
+
+		startAutoSlide();
+	});
 </script>
 
 <style>
@@ -635,6 +666,10 @@ const convenios = [
 
 	body {
 		font-family: 'Inter', sans-serif;
+	}
+
+	h2 {
+		font-size: 36px;
 	}
 	.hero {
 		min-height: 100vh;
@@ -714,6 +749,14 @@ const convenios = [
 
 	.slide-four {
 		background-image: url('../images/slider-4.webp');
+	}
+
+	.slide-five {
+		background-image: url('../images/slider-4.webp');
+	}
+
+	.slide-six {
+		background-image: url('../images/slider-5.webp');
 	}
 
 	.slide.active {
