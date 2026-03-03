@@ -696,24 +696,24 @@ const convenios = [
 		content: '';
 		position: absolute;
 		inset: 0;
-		background: linear-gradient(135deg, rgba(7, 15, 25, 0.65) 0%, rgba(35, 54, 71, 0.25) 100%);
+		background: rgba(7, 15, 25, 0.55);
 		z-index: 0;
 	}
 
 	.slide-one {
-		background-image: url('/images/slider.webp');
+		background-image: url('./images/slider.webp');
 	}
 
 	.slide-two {
-		background-image: url('/images/slider2.webp');
+		background-image: url('./images/slider2.webp');
 	}
 
 	.slide-three {
-		background-image: url('/images/slider-3.webp');
+		background-image: url('./images/slider-3.webp');
 	}
 
 	.slide-four {
-		background-image: url('/images/slider-4.webp');
+		background-image: url('./images/slider-4.webp');
 	}
 
 	.slide.active {
@@ -738,10 +738,6 @@ const convenios = [
 		color: #ffffff;
 		font-family: 'Raleway', sans-serif !important;
 		letter-spacing: -0.01em;
-		background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		background-clip: text;
 		animation: fadeInUp 1s ease-out;
 	}
 
@@ -927,32 +923,21 @@ const convenios = [
 	}
 
 	.cta-button::before {
-		content: '';
-		position: absolute;
-		top: 0;
-		left: -100%;
-		width: 100%;
-		height: 100%;
-		background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-		transition: left 0.6s;
-	}
-
-	.cta-button:hover::before {
-		left: 100%;
+		display: none;
 	}
 
 	.cta-button.primary {
-		background: linear-gradient(135deg, #E1E3E5 0%, #FF9484 35%, #FFB8B0 100%);
+		background: #56BAC0;
 		color: #ffffff;
-		box-shadow: 0 15px 35px rgba(255, 148, 132, 0.3);
+		box-shadow: 0 15px 35px rgba(86, 186, 192, 0.35);
 		font-weight: 700;
 		position: relative;
 	}
 
 	.cta-button.primary:hover {
 		transform: translateY(-3px) scale(1.02);
-		box-shadow: 0 20px 40px rgba(255, 148, 132, 0.4);
-		background: linear-gradient(135deg, #D1D3D5 0%, #E57F73 35%, #FFA8A0 100%);
+		box-shadow: 0 20px 40px rgba(63, 161, 168, 0.45);
+		background: #3FA1A8;
 	}
 
 	.stats {
@@ -975,10 +960,7 @@ const convenios = [
 	.stat-number {
 		font-size: 2.5rem;
 		font-weight: 800;
-		background: linear-gradient(135deg, #1e3a8a 0%, #008BE1 100%);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		background-clip: text;
+		color: #1e3a8a;
 		margin-bottom: 0.5rem;
 	}
 
@@ -1008,10 +990,7 @@ const convenios = [
 	.stat-number {
 		font-size: 2.5rem;
 		font-weight: 800;
-		background: linear-gradient(135deg, #1e3a8a 0%, #008BE1 100%);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		background-clip: text;
+		color: #1e3a8a;
 		line-height: 1;
 		margin-bottom: 0.5rem;
 	}
@@ -1599,7 +1578,7 @@ const convenios = [
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		background: linear-gradient(135deg, #56BAC0 0%, #FF9484 100%);
+		background: #56BAC0;
 		border-radius: 12px;
 		color: white;
 	}
@@ -1614,8 +1593,8 @@ const convenios = [
 	/* Sección Consulta */
 	.consulta-section {
 		padding: 8rem 2rem;
-		background: #E5ECF1;
-		color: #464D57;
+		background: #E4EEF5;
+		color: #2F313A;
 		position: relative;
 		overflow: hidden;
 	}
@@ -1628,11 +1607,11 @@ const convenios = [
 	.consulta-section::before {
 		content: '';
 		position: absolute;
-		top: -20%;
+		top: -15%;
 		right: -10%;
 		width: 60%;
 		height: 140%;
-		background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+		background: rgba(255, 255, 255, 0.18);
 		border-radius: 50%;
 		animation: float 6s ease-in-out infinite;
 	}
@@ -1653,19 +1632,19 @@ const convenios = [
 	}
 
 	.consulta-item {
-		background: rgba(255, 255, 255, 0.05);
-		backdrop-filter: blur(10px);
-		border: 1px solid rgba(255, 255, 255, 0.1);
+		background: #ffffff;
+		border: 1px solid rgba(86, 186, 192, 0.2);
 		border-radius: 16px;
 		padding: 2rem;
 		text-align: center;
 		transition: all 0.3s ease;
+		box-shadow: 0 12px 30px rgba(0, 0, 0, 0.05);
 	}
 
 	.consulta-item:hover {
-		background: rgba(255, 255, 255, 0.08);
-		border-color: rgba(102, 126, 234, 0.5);
-		transform: translateY(-5px);
+		transform: translateY(-6px);
+		border-color: #56BAC0;
+		box-shadow: 0 18px 40px rgba(86, 186, 192, 0.15);
 	}
 
 	.consulta-icon {
@@ -1678,10 +1657,11 @@ const convenios = [
 		background: #56BAC0;
 		border-radius: 12px;
 		color: white;
+		box-shadow: 0 8px 20px rgba(86, 186, 192, 0.3);
 	}
 
 	.consulta-item h3 {
-		color: white;
+		color: #2F313A;
 		font-size: 1.1rem;
 		font-weight: 600;
 		line-height: 1.5;
@@ -1703,7 +1683,7 @@ const convenios = [
 		background: rgba(86, 186, 192, 0.2);
 		border: 1px solid rgba(86, 186, 192, 0.3);
 		border-radius: 50px;
-		color: #93c5fd;
+		color: #464D57;
 		font-weight: 600;
 		font-size: 0.95rem;
 	}
