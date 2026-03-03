@@ -1,4 +1,4 @@
-const WORDPRESS_API_URL = 'https://ckdelap.cl.laboralma.cl/admin/wp-json/wp/v2';
+const WORDPRESS_API_URL = 'https://ckdelap.cl/admin/wp-json/wp/v2';
 
 async function fetchAPI(endpoint) {
   const url = `${WORDPRESS_API_URL}${endpoint}`;
