@@ -283,7 +283,7 @@ const convenios = [
 		<div class="container">
 			<div class="section-header">
 				<span class="section-badge">Sobre Mí</span>
-				<h2>Psicóloga Clínica Especialista en Terapia Online</h2>
+				<h2>Psicóloga Clínica Especialista en Psicoterapia Online</h2>
 			</div>
 			
 			<div class="nosotros-content">
@@ -318,7 +318,7 @@ const convenios = [
 			</div>
 
 			<div class="nosotros-extra">
-				<h4>Cómo trabajo contigo</h4>
+				<h4>Cómo trabajo en sesión contigo</h4>
 				<p>El eje de mi trabajo suele centrarse en el proceso emocional, promoviendo cambios conductuales y cognitivos que permitan mayor conciencia y regulación. Acompaño a cada consultante en la comprensión y elaboración de experiencias pasadas que hoy pueden estar generando malestar.</p>
 				<p>Ejerzo desde principios éticos sólidos y valores que también sostengo en mi vida personal. Mi compromiso es ofrecer un espacio seguro, respetuoso y profesional, donde puedas explorar, comprender y transformar aquello que hoy te limita. A nivel teórico y experiencial, me comprometo a entregarte herramientas concretas para que puedas desarrollarte con mayor seguridad, autonomía y bienestar emocional, físico y mental.</p>
 				<div class="firma">
@@ -430,16 +430,14 @@ const convenios = [
 	</section>
 	<Footer />
 </Layout>
-
-<script>
 	document.addEventListener('DOMContentLoaded', () => {
 		let currentSlide = 0;
 		const slides = document.querySelectorAll('.slide');
 		const indicators = document.querySelectorAll('.indicator');
 		const slider = document.querySelector('.hero-slider');
-		let autoSlideInterval;
+		let autoSlideInterval: ReturnType<typeof setInterval> | null = null;
 
-		function goToSlide(slideIndex) {
+		function goToSlide(slideIndex: number) {
 			if (!slides[slideIndex]) {
 				return;
 			}
@@ -463,6 +461,7 @@ const convenios = [
 		function stopAutoSlide() {
 			if (autoSlideInterval) {
 				clearInterval(autoSlideInterval);
+				autoSlideInterval = null;
 			}
 		}
 

@@ -32,6 +32,9 @@ const getFeatureListHtml = (html: string = '') => {
 };
 
 const getDescriptionHtml = (html: string = '') => html.replace(/<ul[\s\S]*?<\/ul>/gi, '').trim();
+
+const formatTitle = (title: string = '') =>
+  title.replace(/Terapia Individual Online/gi, 'Psicoterapia clínica online');
 ---
 
 <section class="servicios-section">
@@ -61,7 +64,7 @@ const getDescriptionHtml = (html: string = '') => html.replace(/<ul[\s\S]*?<\/ul
                 loading="lazy"
               />
             </div>
-            <h3 set:html={servicio.title.rendered} />
+            <h3 set:html={formatTitle(servicio.title.rendered)} />
             <div class="servicio-description" set:html={getDescriptionHtml(servicio.excerpt?.rendered || servicio.content?.rendered || '')} />
             <div class="servicio-features" set:html={getFeatureListHtml(servicio.content?.rendered || servicio.excerpt?.rendered || '')} />
           </article>
