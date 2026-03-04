@@ -13,10 +13,17 @@ type Servicio = {
 
 const servicios = (await getServicios()) as Servicio[];
 
+const serviciosOnline = servicios?.filter((servicio) => {
+  const titulo = servicio.title?.rendered?.toLowerCase?.() || '';
+  return !titulo.includes('presencial');
+}) || [];
+
+const serviciosParaMostrar = serviciosOnline.length > 0 ? serviciosOnline : servicios;
+
 const fallbackImages = [
   'https://picsum.photos/seed/terapia-online/420/210',
-  'https://picsum.photos/seed/terapia-presencial/420/210',
-  'https://picsum.photos/seed/primera-sesion/420/210',
+  'https://picsum.photos/seed/acompanamiento-digital/420/210',
+  'https://picsum.photos/seed/informes-clinicos/420/210',
 ];
 
 const getFeatureListHtml = (html: string = '') => {
@@ -30,14 +37,22 @@ const getDescriptionHtml = (html: string = '') => html.replace(/<ul[\s\S]*?<\/ul
 <section class="servicios-section">
   <div class="container">
     <div class="section-header">
-      <span class="section-badge">¿Cómo trabajo?</span>
+      <span class="section-badge">Acompañamiento 100% online</span>
       <h2>Servicios</h2>
-      <p class="section-subtitle">Formatos de atención adaptados a tus necesidades y estilo de vida</p>
+      <p class="section-subtitle">
+        Sesiones psicoterapéuticas online, con informes clínicos y certificados de atención para respaldar tus trámites personales cuando lo necesites.
+      </p>
+    </div>
+
+    <div class="servicios-highlights">
+      <div class="highlight-pill">Sesiones online en vivo</div>
+      <div class="highlight-pill">Informes clínicos personalizados</div>
+      <div class="highlight-pill">Certificados de atención psicoterapéutica</div>
     </div>
     
     <div class="servicios-grid">
-      {servicios && servicios.length > 0 ? (
-        servicios.map((servicio, index) => (
+      {serviciosParaMostrar && serviciosParaMostrar.length > 0 ? (
+        serviciosParaMostrar.map((servicio, index) => (
           <article class="servicio-card" style={`animation-delay: ${index * 0.1}s`}>
             <div class="servicio-image">
               <img
@@ -102,6 +117,25 @@ const getDescriptionHtml = (html: string = '') => html.replace(/<ul[\s\S]*?<\/ul
     margin: 0 auto;
   }
   
+  .servicios-highlights {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .highlight-pill {
+    background: rgba(86, 186, 192, 0.18);
+    color: #257880;
+    padding: 0.65rem 1.25rem;
+    border-radius: 40px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    letter-spacing: 0.3px;
+    box-shadow: inset 0 0 0 1px rgba(37, 120, 128, 0.2);
+  }
+
   .servicios-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -222,6 +256,11 @@ const getDescriptionHtml = (html: string = '') => html.replace(/<ul[\s\S]*?<\/ul
       padding: 4rem 1.5rem;
     }
     
+    .servicios-highlights {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
     .servicios-grid {
       grid-template-columns: 1fr;
       gap: 1.5rem;
