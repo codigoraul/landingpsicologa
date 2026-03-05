@@ -1,12 +1,31 @@
 ---
 import { getContactInfo, getServicios } from '../lib/wordpress.js';
 
+type ServicioWp = {
+  title?: {
+    rendered?: string;
+  };
+};
+
 const contactInfo = await getContactInfo();
 const email = contactInfo?.acf?.email || 'contacto@psicologa-clinica.cl';
 const telefono = contactInfo?.acf?.telefono || '+56 2 1234 5678';
 const direccion = 'Chile';
 
-const servicios = await getServicios();
+const servicios = (await getServicios()) as ServicioWp[];
+
+const serviciosFooter = (servicios || [])
+  .filter((servicio: ServicioWp) => {
+    const titulo = servicio?.title?.rendered?.toLowerCase?.() || '';
+    return !titulo.includes('presencial');
+  })
+  .map((servicio: ServicioWp) => ({
+    ...servicio,
+    formattedTitle: (servicio?.title?.rendered || '').replace(
+      /Terapia Individual Online/gi,
+      'Psicoterapia clínica online'
+    ),
+  }));
 ---
 
 <footer class="footer">
@@ -16,7 +35,7 @@ const servicios = await getServicios();
         <div class="footer-logo">
           <img src="/logo-psicologia.png" alt="Psicóloga Clínica" style="height: 50px;">
         </div>
-        <p class="footer-desc">Psicóloga clínica especialista en terapia online para adultos. Acompañamiento terapéutico profesional y confidencial.</p>
+        <p class="footer-desc">Psicóloga clínica especialista en psicoterapia para adultos. Acompañamiento terapéutico profesional y confidencial.</p>
       </div>
 
       <div class="footer-col">
@@ -24,7 +43,7 @@ const servicios = await getServicios();
         <ul class="footer-links">
           <li><a href="#inicio">Inicio</a></li>
           <li><a href="#convenios">Convenios</a></li>
-          <li><a href="#temas">Temas</a></li>
+          <li><a href="#servicios">Servicios</a></li>
           <li><a href="#nosotros">Sobre Mí</a></li>
           <li><a href="#testimonios">Testimonios</a></li>
           <li><a href="#contacto">Contacto</a></li>
@@ -34,8 +53,8 @@ const servicios = await getServicios();
       <div class="footer-col">
         <h4>Servicios</h4>
         <ul class="footer-links">
-          {servicios.slice(0, 8).map((servicio) => (
-            <li><a href="#temas">{servicio.title.rendered}</a></li>
+          {serviciosFooter.slice(0, 8).map((servicio) => (
+            <li><a href="#servicios">{servicio.formattedTitle}</a></li>
           ))}
         </ul>
       </div>
