@@ -5,11 +5,11 @@ declare(strict_types=1);
 $BASE_PATH = '';
 $SITE_URL = (isset($_SERVER['HTTP_HOST']) && is_string($_SERVER['HTTP_HOST']) && $_SERVER['HTTP_HOST'] !== '')
   ? ('https://' . $_SERVER['HTTP_HOST'])
-  : 'https://protrabajo.cl';
+  : 'https://ckdelap.cl';
 
-$TO_EMAIL = "codigoraul@gmail.com, rguajardo@protrabajo.cl, contacto@polerasfutbol.cl";
-$FROM_EMAIL = "formulario@protrabajo.cl";
-$FROM_NAME = json_decode(@file_get_contents("https://protrabajo.cl/admin/wp-json/wp/v2/contact-info"))->acf->nombre ?? "ProTrabajo";
+$TO_EMAIL = "codigoraul@gmail.com";
+$FROM_EMAIL = "formulario@ckdelap.cl";
+$FROM_NAME = "Camila Kush de la Parra - Psicóloga";
 $BCC_EMAILS = '';
 
 $CONFIG_USED_PATH = '';
@@ -26,17 +26,17 @@ if ($ENV_SITE_URL !== false && $ENV_SITE_URL !== '') {
 
 $ENV_TO_EMAIL = getenv('CONTACT_TO_EMAIL');
 if ($ENV_TO_EMAIL !== false && $ENV_TO_EMAIL !== '') {
-  $TO_EMAIL = "codigoraul@gmail.com, rguajardo@protrabajo.cl, contacto@polerasfutbol.cl";
+  $TO_EMAIL = $ENV_TO_EMAIL;
 }
 
 $ENV_FROM_EMAIL = getenv('CONTACT_FROM_EMAIL');
 if ($ENV_FROM_EMAIL !== false && $ENV_FROM_EMAIL !== '') {
-  $FROM_EMAIL = "formulario@protrabajo.cl";
+  $FROM_EMAIL = $ENV_FROM_EMAIL;
 }
 
 $ENV_FROM_NAME = getenv('CONTACT_FROM_NAME');
 if ($ENV_FROM_NAME !== false && $ENV_FROM_NAME !== '') {
-  $FROM_NAME = json_decode(@file_get_contents("https://protrabajo.cl/admin/wp-json/wp/v2/contact-info"))->acf->nombre ?? "ProTrabajo";
+  $FROM_NAME = $ENV_FROM_NAME;
 }
 
 $ENV_BCC_EMAILS = getenv('CONTACT_BCC_EMAILS');
@@ -55,9 +55,9 @@ foreach ($CONFIG_PATHS as $configPath) {
     if (is_array($config)) {
       if (isset($config['BASE_PATH']) && is_string($config['BASE_PATH'])) $BASE_PATH = $config['BASE_PATH'];
       if (isset($config['SITE_URL']) && is_string($config['SITE_URL'])) $SITE_URL = $config['SITE_URL'];
-      if (isset($config['TO_EMAIL']) && is_string($config['TO_EMAIL'])) $TO_EMAIL = "codigoraul@gmail.com, rguajardo@protrabajo.cl, contacto@polerasfutbol.cl";
-      if (isset($config['FROM_EMAIL']) && is_string($config['FROM_EMAIL'])) $FROM_EMAIL = "formulario@protrabajo.cl";
-      if (isset($config['FROM_NAME']) && is_string($config['FROM_NAME'])) $FROM_NAME = json_decode(@file_get_contents("https://protrabajo.cl/admin/wp-json/wp/v2/contact-info"))->acf->nombre ?? "ProTrabajo";
+      if (isset($config['TO_EMAIL']) && is_string($config['TO_EMAIL'])) $TO_EMAIL = $config['TO_EMAIL'];
+      if (isset($config['FROM_EMAIL']) && is_string($config['FROM_EMAIL'])) $FROM_EMAIL = $config['FROM_EMAIL'];
+      if (isset($config['FROM_NAME']) && is_string($config['FROM_NAME'])) $FROM_NAME = $config['FROM_NAME'];
       if (isset($config['BCC_EMAILS']) && is_string($config['BCC_EMAILS'])) $BCC_EMAILS = $config['BCC_EMAILS'];
     }
     $CONFIG_USED_PATH = $configPath;
@@ -126,10 +126,7 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 $toHeader = $TO_EMAIL;
 }
 
-$subject = json_decode(@file_get_contents("https://protrabajo.cl/admin/wp-json/wp/v2/contact-info"))->acf->asunto_default ?? "Nueva consulta desde protrabajo.cl";
-$subject = "Nueva consulta desde ProTrabajo";
-  $subject = json_decode(@file_get_contents("https://protrabajo.cl/admin/wp-json/wp/v2/contact-info"))->acf->asunto_default ?? "Nueva consulta desde protrabajo.cl";
-$subject = "Consulta: " . $asunto;
+$subject = $asunto !== '' ? "Consulta: " . $asunto : "Nueva consulta desde ckdelap.cl";
 
 $escape = static function (string $value): string {
   return htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
@@ -168,16 +165,16 @@ $asuntoCell = $asunto !== '' ? $escape($asunto) : '-';
 $telefonoCell = $telefono !== '' ? $escape($telefono) : '-';
 $mensajeHtml = nl2br($escape($mensaje));
 
-$bodyHtml = '<!doctype html><html><head><meta charset="UTF-8"><style>body{font-family:Arial,sans-serif;background:#f3f4f6;margin:0;padding:20px}.container{max-width:600px;margin:0 auto;background:white;border-radius:12px;overflow:hidden;box-shadow:0 4px 6px rgba(0,0,0,0.1)}.header{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white;padding:30px;text-align:center}.header h1{margin:0;font-size:24px}.content{padding:30px}.field{margin-bottom:20px}.label{font-weight:700;color:#667eea;margin-bottom:5px;font-size:14px}.value{background:#f9fafb;padding:12px;border-radius:6px;border-left:3px solid #667eea;font-size:15px}.footer{text-align:center;padding:20px;color:#6b7280;font-size:12px;border-top:1px solid #e5e7eb}</style></head><body><div class="container"><div class="header"><h1>📧 Nuevo Mensaje de Contacto</h1><p style="margin:5px 0 0;opacity:0.9">ProTrabajo.cl</p></div><div class="content"><p style="color:#374151;margin:0 0 20px">Hola,</p><p style="color:#6b7280;margin:0 0 30px">Has recibido un nuevo mensaje desde el formulario de contacto de tu sitio web.</p><div class="field"><div class="label">👤 Nombre</div><div class="value">' . $escape($nombre) . '</div></div><div class="field"><div class="label">📧 Email</div><div class="value">' . $escape($email) . '</div></div><div class="field"><div class="label">📱 Teléfono</div><div class="value">' . $telefonoCell . '</div></div>' . ($asunto !== '' ? '<div class="field"><div class="label">📋 Asunto</div><div class="value">' . $asuntoCell . '</div></div>' : '''') . '<div class="field"><div class="label">💬 Mensaje</div><div class="value">' . $mensajeHtml . '</div></div><div class="footer"><p style="margin:5px 0">Este mensaje fue enviado desde ProTrabajo.cl</p><p style="margin:5px 0">© 2026 ProTrabajo - Todos los derechos reservados</p></div></div></div></body></html>';
+$bodyHtml = '<!doctype html><html><head><meta charset="UTF-8"><style>body{font-family:Arial,sans-serif;background:#f3f4f6;margin:0;padding:20px}.container{max-width:600px;margin:0 auto;background:white;border-radius:12px;overflow:hidden;box-shadow:0 4px 6px rgba(0,0,0,0.1)}.header{background:linear-gradient(135deg,#FF9484 0%,#FFB8B0 100%);color:white;padding:30px;text-align:center}.header h1{margin:0;font-size:24px}.content{padding:30px}.field{margin-bottom:20px}.label{font-weight:700;color:#FF9484;margin-bottom:5px;font-size:14px}.value{background:#f9fafb;padding:12px;border-radius:6px;border-left:3px solid #FF9484;font-size:15px}.footer{text-align:center;padding:20px;color:#6b7280;font-size:12px;border-top:1px solid #e5e7eb}</style></head><body><div class="container"><div class="header"><h1>📧 Nuevo Mensaje de Contacto</h1><p style="margin:5px 0 0;opacity:0.9">Camila Kush de la Parra - Psicóloga</p></div><div class="content"><p style="color:#374151;margin:0 0 20px">Hola,</p><p style="color:#6b7280;margin:0 0 30px">Has recibido un nuevo mensaje desde el formulario de contacto de tu sitio web.</p><div class="field"><div class="label">👤 Nombre</div><div class="value">' . $escape($nombre) . '</div></div><div class="field"><div class="label">📧 Email</div><div class="value">' . $escape($email) . '</div></div><div class="field"><div class="label">📱 Teléfono</div><div class="value">' . $telefonoCell . '</div></div>' . ($asunto !== '' ? '<div class="field"><div class="label">📋 Motivo de consulta</div><div class="value">' . $asuntoCell . '</div></div>' : '') . '<div class="field"><div class="label">💬 Mensaje</div><div class="value">' . $mensajeHtml . '</div></div><div class="footer"><p style="margin:5px 0">Este mensaje fue enviado desde ckdelap.cl</p><p style="margin:5px 0">© 2026 Camila Kush de la Parra - Todos los derechos reservados</p></div></div></div></body></html>';
 
-$bodyText = "Nueva consulta desde ProTrabajo\n\n"
+$bodyText = "Nueva consulta desde ckdelap.cl\n\n"
   . "Nombre: {$nombre}\n"
   . "Email: {$email}\n"
   . "Teléfono: " . ($telefono !== '' ? $telefono : '-') . "\n"
-  . "Asunto: " . ($asunto !== '' ? $asunto : '-') . "\n\n"
+  . "Motivo de consulta: " . ($asunto !== '' ? $asunto : '-') . "\n\n"
   . "Mensaje:\n{$mensaje}\n";
 
-$boundary = 'protrabajo_' . bin2hex(random_bytes(12));
+$boundary = 'ckdelap_' . bin2hex(random_bytes(12));
 $body = "--{$boundary}\r\n"
   . "Content-Type: text/plain; charset=UTF-8\r\n"
   . "Content-Transfer-Encoding: 8bit\r\n\r\n"
@@ -194,7 +191,7 @@ $headers[] = 'Content-Type: multipart/alternative; boundary="' . $boundary . '"'
 $headers[] = 'Date: ' . date(DATE_RFC2822);
 $host = parse_url($SITE_URL, PHP_URL_HOST);
 if (!is_string($host) || $host === '') {
-  $host = 'protrabajo.cl';
+  $host = 'ckdelap.cl';
 }
 $headers[] = 'Message-ID: <' . bin2hex(random_bytes(16)) . '@' . $host . '>';
 $headers[] = 'From: ' . $encodeDisplayName($FROM_NAME) . ' <' . $sanitizeHeaderValue($FROM_EMAIL) . '>';
@@ -211,9 +208,10 @@ if ($bccEmails !== []) {
 }
 
 $params = '-f ' . $sanitizeHeaderValue($FROM_EMAIL);
-$ok = @mail($TO_EMAIL, "Contacto ProTrabajo", $body, implode("\r\n", $headers));
+$subjectEncoded = '=?UTF-8?B?' . base64_encode($subject) . '?=';
+$ok = @mail($TO_EMAIL, $subjectEncoded, $body, implode("\r\n", $headers));
 if (!$ok) {
-  $ok = @mail($TO_EMAIL, "Contacto ProTrabajo", $body, implode("\r\n", $headers));
+  $ok = @mail($TO_EMAIL, $subjectEncoded, $body, implode("\r\n", $headers));
 }
 
 if ($ok) {

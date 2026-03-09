@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 return [
   'BASE_PATH' => '',
-  'SITE_URL' => 'https://protrabajo.cl',
-  'TO_EMAIL' => 'codigoraul@gmail.com, rguajardo@protrabajo.cl, contacto@polerasfutbol.cl',
-  'FROM_EMAIL' => 'formulario@protrabajo.cl',
-  'FROM_NAME' => 'ProTrabajo',
+  'SITE_URL' => 'https://ckdelap.cl',
+  'TO_EMAIL' => 'codigoraul@gmail.com',
+  'FROM_EMAIL' => 'formulario@ckdelap.cl',
+  'FROM_NAME' => 'Camila Kush de la Parra - Psicóloga',
   'BCC_EMAILS' => '',
 ];
