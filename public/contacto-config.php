@@ -5,8 +5,8 @@ declare(strict_types=1);
 return [
   'BASE_PATH' => '',
   'SITE_URL' => 'https://ckdelap.cl',
-  'TO_EMAIL' => 'codigoraul@gmail.com',
+  'TO_EMAIL' => '',
   'FROM_EMAIL' => 'formulario@ckdelap.cl',
-  'FROM_NAME' => 'Camila Kush de la Parra - Psicóloga',
+  'FROM_NAME' => 'Camila Kush de la Puente - Psicóloga',
   'BCC_EMAILS' => '',
 ];

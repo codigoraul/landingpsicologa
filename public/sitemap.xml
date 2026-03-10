@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  
+  <!-- Página Principal -->
+  <url>
+    <loc>https://ckdelap.cl/</loc>
+    <lastmod>2026-03-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://ckdelap.cl/images/camila-kush-psicologa.webp</image:loc>
+      <image:title>Camila Kush de la Puente - Psicóloga Clínica</image:title>
+      <image:caption>Psicóloga Clínica Integral Especialista en Psicoterapia Online para adultos</image:caption>
+    </image:image>
+  </url>
+  
+  <!-- Sección Inicio -->
+  <url>
+    <loc>https://ckdelap.cl/#inicio</loc>
+    <lastmod>2026-03-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <!-- Sección Áreas de Atención -->
+  <url>
+    <loc>https://ckdelap.cl/#areas-atencion</loc>
+    <lastmod>2026-03-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <!-- Sección Sobre Mí -->
+  <url>
+    <loc>https://ckdelap.cl/#nosotros</loc>
+    <lastmod>2026-03-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Sección Servicios -->
+  <url>
+    <loc>https://ckdelap.cl/#servicios</loc>
+    <lastmod>2026-03-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <!-- Sección Por Qué Elegirme -->
+  <url>
+    <loc>https://ckdelap.cl/#porque</loc>
+    <lastmod>2026-03-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <!-- Sección Testimonios -->
+  <url>
+    <loc>https://ckdelap.cl/#testimonios</loc>
+    <lastmod>2026-03-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <!-- Sección Contacto -->
+  <url>
+    <loc>https://ckdelap.cl/#contacto</loc>
+    <lastmod>2026-03-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+</urlset>

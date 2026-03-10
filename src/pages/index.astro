@@ -27,22 +27,22 @@ const convenios = [
 			</div>
 			<div class="slide slide-two">
 				<div class="hero-content">
-					<h1>Iniciar un proceso terapéutico es una decisión valiente.<br>Implica detenerse, mirar hacia dentro y asumir el compromiso de comprender aquello que duele.</h1>
+					<p class="hero-title">Iniciar un proceso terapéutico es una decisión valiente.<br>Implica detenerse, mirar hacia dentro y asumir el compromiso de comprender aquello que duele.</p>
 				</div>
 			</div>
 			<div class="slide slide-three">
 				<div class="hero-content">
-					<h1>Te ofrezco un espacio terapéutico <span class="highlight">100% online, confidencial y seguro</span>, donde podrás explorar tu historia con respeto y contención profesional.</h1>
+					<p class="hero-title">Te ofrezco un espacio terapéutico <span class="highlight">100% online, confidencial y seguro</span>, donde podrás explorar tu historia con respeto y contención profesional.</p>
 				</div>
 			</div>
 			<div class="slide slide-four">
 				<div class="hero-content">
-					<h1>Sanar no es olvidar lo vivido;<br>es aprender a resignificarlo para vivir con mayor claridad, equilibrio y sentido.</h1>
+					<p class="hero-title">Sanar no es olvidar lo vivido;<br>es aprender a resignificarlo para vivir con mayor claridad, equilibrio y sentido.</p>
 				</div>
 			</div>
 			<div class="slide slide-five">
 				<div class="hero-content">
-					<h1>Si estás aquí, probablemente algo dentro de ti<br><span class="highlight">ya sabe que es momento de hacerlo distinto.</span></h1>
+					<p class="hero-title">Si estás aquí, probablemente algo dentro de ti<br><span class="highlight">ya sabe que es momento de hacerlo distinto.</span></p>
 					<div class="cta-group">
 						<a href="#contacto" class="cta-button primary">
 							<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -55,7 +55,7 @@ const convenios = [
 			</div>
 			<div class="slide slide-six">
 				<div class="hero-content">
-					<h1>Tu bienestar emocional es una prioridad.<br><span class="highlight">Agendar una sesión es el primer paso hacia ese cambio.</span></h1>
+					<p class="hero-title">Tu bienestar emocional es una prioridad.<br><span class="highlight">Agendar una sesión es el primer paso hacia ese cambio.</span></p>
 				</div>
 			</div>
 		</div>
@@ -288,7 +288,7 @@ const convenios = [
 			
 			<div class="nosotros-content">
 				<div class="nosotros-image">
-					<img src="/images/camila-kush-psicologa.webp" alt="Psicóloga Clínica" />
+					<img src="/images/camila-kush-psicologa.webp" alt="Camila Kush de la Puente - Psicóloga Clínica Integral Especialista en Psicoterapia Online para adultos" />
 				</div>
 				
 				<div class="nosotros-text">
@@ -709,7 +709,8 @@ const convenios = [
 		box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 	}
 
-	h1 {
+	h1,
+	.hero-title {
 		font-size: 64px;
 		font-weight: 800;
 		margin-bottom: 1.5rem;
@@ -720,14 +721,16 @@ const convenios = [
 
 	/* Tablet */
 	@media (max-width: 1024px) {
-		h1 {
+		h1,
+		.hero-title {
 			font-size: 48px;
 		}
 	}
 
 	/* Mobile */
 	@media (max-width: 768px) {
-		h1 {
+		h1,
+		.hero-title {
 			font-size: 32px;
 			line-height: 1.3;
 		}

@@ -7,10 +7,9 @@ $SITE_URL = (isset($_SERVER['HTTP_HOST']) && is_string($_SERVER['HTTP_HOST']) &&
   ? ('https://' . $_SERVER['HTTP_HOST'])
   : 'https://ckdelap.cl';
 
-$TO_EMAILS_BASE = 'codigoraul@gmail.com, contacto@ckdelap.cl';
-$TO_EMAIL = $TO_EMAILS_BASE;
-$FROM_EMAIL = 'formulario@ckdelap.cl';
-$FROM_NAME = 'Camila Kush de la Puente - Psicóloga';
+$TO_EMAIL = "codigoraul@gmail.com";
+$FROM_EMAIL = "formulario@ckdelap.cl";
+$FROM_NAME = "Camila Kush de la Parra - Psicóloga";
 $BCC_EMAILS = '';
 
 $CONFIG_USED_PATH = '';
@@ -27,7 +26,7 @@ if ($ENV_SITE_URL !== false && $ENV_SITE_URL !== '') {
 
 $ENV_TO_EMAIL = getenv('CONTACT_TO_EMAIL');
 if ($ENV_TO_EMAIL !== false && $ENV_TO_EMAIL !== '') {
-  $TO_EMAIL = $TO_EMAILS_BASE . ', ' . $ENV_TO_EMAIL;
+  $TO_EMAIL = $ENV_TO_EMAIL;
 }
 
 $ENV_FROM_EMAIL = getenv('CONTACT_FROM_EMAIL');
@@ -56,7 +55,7 @@ foreach ($CONFIG_PATHS as $configPath) {
     if (is_array($config)) {
       if (isset($config['BASE_PATH']) && is_string($config['BASE_PATH'])) $BASE_PATH = $config['BASE_PATH'];
       if (isset($config['SITE_URL']) && is_string($config['SITE_URL'])) $SITE_URL = $config['SITE_URL'];
-      if (isset($config['TO_EMAIL']) && is_string($config['TO_EMAIL'])) $TO_EMAIL = $TO_EMAILS_BASE . ', ' . $config['TO_EMAIL'];
+      if (isset($config['TO_EMAIL']) && is_string($config['TO_EMAIL'])) $TO_EMAIL = $config['TO_EMAIL'];
       if (isset($config['FROM_EMAIL']) && is_string($config['FROM_EMAIL'])) $FROM_EMAIL = $config['FROM_EMAIL'];
       if (isset($config['FROM_NAME']) && is_string($config['FROM_NAME'])) $FROM_NAME = $config['FROM_NAME'];
       if (isset($config['BCC_EMAILS']) && is_string($config['BCC_EMAILS'])) $BCC_EMAILS = $config['BCC_EMAILS'];
@@ -80,6 +79,12 @@ function base_url(string $siteUrl, string $basePath, string $path): string {
 function contacto_url(string $siteUrl, string $basePath, string $status): string {
   $base = base_url($siteUrl, $basePath, '/');
   $qs = http_build_query(['status' => $status]);
+  return $base . '?' . $qs . '#contacto';
+}
+
+function contacto_url_with_error(string $siteUrl, string $basePath, string $status, string $error): string {
+  $base = base_url($siteUrl, $basePath, '/');
+  $qs = http_build_query(['status' => $status, 'error' => $error]);
   return $base . '?' . $qs . '#contacto';
 }
 
@@ -113,19 +118,15 @@ $telefono = trim((string)($_POST['telefono'] ?? ''));
 $asunto = trim((string)($_POST['asunto'] ?? ''));
 $mensaje = trim((string)($_POST['mensaje'] ?? ''));
 
-if ($nombre === '' || $email === '' || $mensaje === '') {
-  header('Content-Type: application/json');
-  echo json_encode(['success' => false, 'message' => 'Por favor completa todos los campos obligatorios.']);
-  exit;
-}
+$bccEmails = [];
+$toEmails = [$TO_EMAIL];
+
 
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-  header('Content-Type: application/json');
-  echo json_encode(['success' => false, 'message' => 'El correo electrónico ingresado no es válido.']);
-  exit;
+$toHeader = $TO_EMAIL;
 }
 
-$subject = 'Nueva consulta desde ckdelap.cl';
+$subject = $asunto !== '' ? "Consulta: " . $asunto : "Nueva consulta desde ckdelap.cl";
 
 $escape = static function (string $value): string {
   return htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
@@ -160,27 +161,17 @@ $parseEmailList = static function (string $value) use ($sanitizeHeaderValue): ar
   return array_values(array_unique($emails));
 };
 
-$telefonoCell = $telefono !== '' ? $escape($telefono) : '-';
 $asuntoCell = $asunto !== '' ? $escape($asunto) : '-';
+$telefonoCell = $telefono !== '' ? $escape($telefono) : '-';
 $mensajeHtml = nl2br($escape($mensaje));
 
-$bodyHtml = '<!doctype html><html><head><meta charset="UTF-8"></head><body style="font-family:Arial,Helvetica,sans-serif; color:#111827;">'
-  . '<h2 style="margin:0 0 16px; font-size:18px;">Nueva consulta desde Camila Kush de la Puente - Psicóloga</h2>'
-  . '<table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse; width:100%; max-width:640px;">'
-  . '<tbody>'
-  . '<tr><td style="padding:8px 10px; border:1px solid #E5E7EB; font-weight:700; width:180px;">Nombre</td><td style="padding:8px 10px; border:1px solid #E5E7EB;">' . $escape($nombre) . '</td></tr>'
-  . '<tr><td style="padding:8px 10px; border:1px solid #E5E7EB; font-weight:700;">Email</td><td style="padding:8px 10px; border:1px solid #E5E7EB;">' . $escape($email) . '</td></tr>'
-  . '<tr><td style="padding:8px 10px; border:1px solid #E5E7EB; font-weight:700;">Teléfono</td><td style="padding:8px 10px; border:1px solid #E5E7EB;">' . $telefonoCell . '</td></tr>'
-  . '<tr><td style="padding:8px 10px; border:1px solid #E5E7EB; font-weight:700;">Motivo de consulta</td><td style="padding:8px 10px; border:1px solid #E5E7EB;">' . $asuntoCell . '</td></tr>'
-  . '<tr><td style="padding:8px 10px; border:1px solid #E5E7EB; font-weight:700; vertical-align:top;">Mensaje</td><td style="padding:8px 10px; border:1px solid #E5E7EB;">' . $mensajeHtml . '</td></tr>'
-  . '</tbody></table>'
-  . '</body></html>';
+$bodyHtml = '<!doctype html><html><head><meta charset="UTF-8"><style>body{font-family:Arial,sans-serif;background:#f3f4f6;margin:0;padding:20px}.container{max-width:600px;margin:0 auto;background:white;border-radius:12px;overflow:hidden;box-shadow:0 4px 6px rgba(0,0,0,0.1)}.header{background:linear-gradient(135deg,#FF9484 0%,#FFB8B0 100%);color:white;padding:30px;text-align:center}.header h1{margin:0;font-size:24px}.content{padding:30px}.field{margin-bottom:20px}.label{font-weight:700;color:#FF9484;margin-bottom:5px;font-size:14px}.value{background:#f9fafb;padding:12px;border-radius:6px;border-left:3px solid #FF9484;font-size:15px}.footer{text-align:center;padding:20px;color:#6b7280;font-size:12px;border-top:1px solid #e5e7eb}</style></head><body><div class="container"><div class="header"><h1>📧 Nuevo Mensaje de Contacto</h1><p style="margin:5px 0 0;opacity:0.9">Camila Kush de la Parra - Psicóloga</p></div><div class="content"><p style="color:#374151;margin:0 0 20px">Hola,</p><p style="color:#6b7280;margin:0 0 30px">Has recibido un nuevo mensaje desde el formulario de contacto de tu sitio web.</p><div class="field"><div class="label">👤 Nombre</div><div class="value">' . $escape($nombre) . '</div></div><div class="field"><div class="label">📧 Email</div><div class="value">' . $escape($email) . '</div></div><div class="field"><div class="label">📱 Teléfono</div><div class="value">' . $telefonoCell . '</div></div>' . ($asunto !== '' ? '<div class="field"><div class="label">📋 Motivo de consulta</div><div class="value">' . $asuntoCell . '</div></div>' : '') . '<div class="field"><div class="label">💬 Mensaje</div><div class="value">' . $mensajeHtml . '</div></div><div class="footer"><p style="margin:5px 0">Este mensaje fue enviado desde ckdelap.cl</p><p style="margin:5px 0">© 2026 Camila Kush de la Parra - Todos los derechos reservados</p></div></div></div></body></html>';
 
 $bodyText = "Nueva consulta desde ckdelap.cl\n\n"
   . "Nombre: {$nombre}\n"
   . "Email: {$email}\n"
-  . "Teléfono: {$telefono}\n"
-  . "Motivo de consulta: {$asunto}\n\n"
+  . "Teléfono: " . ($telefono !== '' ? $telefono : '-') . "\n"
+  . "Motivo de consulta: " . ($asunto !== '' ? $asunto : '-') . "\n\n"
   . "Mensaje:\n{$mensaje}\n";
 
 $boundary = 'ckdelap_' . bin2hex(random_bytes(12));
@@ -217,16 +208,16 @@ if ($bccEmails !== []) {
 }
 
 $params = '-f ' . $sanitizeHeaderValue($FROM_EMAIL);
-$ok = @mail($toHeader, '=?UTF-8?B?' . base64_encode($subject) . '?=', $body, implode("\r\n", $headers), $params);
+$subjectEncoded = '=?UTF-8?B?' . base64_encode($subject) . '?=';
+$ok = @mail($TO_EMAIL, $subjectEncoded, $body, implode("\r\n", $headers));
 if (!$ok) {
-  $ok = @mail($toHeader, '=?UTF-8?B?' . base64_encode($subject) . '?=', $body, implode("\r\n", $headers));
+  $ok = @mail($TO_EMAIL, $subjectEncoded, $body, implode("\r\n", $headers));
 }
 
 if ($ok) {
-  header('Content-Type: application/json');
-  echo json_encode(['success' => true, 'message' => '¡Mensaje enviado exitosamente! Nos pondremos en contacto contigo pronto.']);
-  exit;
+  redirect_to(contacto_url($SITE_URL, $BASE_PATH, "success"));
 }
 
-header('Content-Type: application/json');
-echo json_encode(['success' => false, 'message' => 'No se pudo enviar el mensaje. Por favor intenta nuevamente o contáctanos por teléfono.']);
+// Guardar log de error y redirigir a éxito
+file_put_contents(__DIR__ . '/mail_errors.log', date("Y-m-d H:i:s") . " - Mail failed for: " . $toHeader . " | Error: " . error_get_last()["message"] . " | SMTP: " . ini_get("SMTP") . " | Port: " . ini_get("smtp_port") . "\n", FILE_APPEND);
+redirect_to(contacto_url($SITE_URL, $BASE_PATH, "mail_failed"));
