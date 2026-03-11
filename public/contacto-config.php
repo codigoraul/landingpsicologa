@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 return [
-  'BASE_PATH' => '',
+  'BASE_PATH' => '/prueba',
   'SITE_URL' => 'https://ckdelap.cl',
   'TO_EMAIL' => '',
   'FROM_EMAIL' => 'formulario@ckdelap.cl',
