@@ -114,15 +114,11 @@ $asunto = trim((string)($_POST['asunto'] ?? ''));
 $mensaje = trim((string)($_POST['mensaje'] ?? ''));
 
 if ($nombre === '' || $email === '' || $mensaje === '') {
-  header('Content-Type: application/json');
-  echo json_encode(['success' => false, 'message' => 'Por favor completa todos los campos obligatorios.']);
-  exit;
+  redirect_to(contacto_url($SITE_URL, $BASE_PATH, 'error'));
 }
 
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-  header('Content-Type: application/json');
-  echo json_encode(['success' => false, 'message' => 'El correo electrónico ingresado no es válido.']);
-  exit;
+  redirect_to(contacto_url($SITE_URL, $BASE_PATH, 'error'));
 }
 
 $subject = 'Nueva consulta desde ckdelap.cl';
@@ -223,10 +219,7 @@ if (!$ok) {
 }
 
 if ($ok) {
-  header('Content-Type: application/json');
-  echo json_encode(['success' => true, 'message' => '¡Mensaje enviado exitosamente! Nos pondremos en contacto contigo pronto.']);
-  exit;
+  redirect_to(contacto_url($SITE_URL, $BASE_PATH, 'success'));
 }
 
-header('Content-Type: application/json');
-echo json_encode(['success' => false, 'message' => 'No se pudo enviar el mensaje. Por favor intenta nuevamente o contáctanos por teléfono.']);
+redirect_to(contacto_url($SITE_URL, $BASE_PATH, 'error'));
