@@ -3,16 +3,7 @@ const rawBase = import.meta.env.BASE_URL ?? '/';
 const basePath = rawBase === '/' ? '' : rawBase.replace(/\/$/, '');
 const actionUrl = `${basePath}/contacto.php`;
 
-const status = Astro.url.searchParams.get('status');
-const statusMessages: Record<string, { type: 'success' | 'error', text: string }> = {
-  success: { type: 'success', text: '¡Mensaje enviado exitosamente! Nos pondremos en contacto contigo pronto.' },
-  error: { type: 'error', text: 'No se pudo enviar el mensaje. Por favor intenta nuevamente o contáctanos por teléfono.' },
-  missing_fields: { type: 'error', text: 'Por favor completa todos los campos obligatorios.' },
-  invalid_email: { type: 'error', text: 'El correo electrónico ingresado no es válido.' },
-  mail_failed: { type: 'error', text: 'No se pudo enviar el mensaje. Por favor intenta nuevamente o contáctanos por teléfono.' },
-};
-const statusData = status ? statusMessages[status] : null;
-console.log('Status param:', status, 'StatusData:', statusData);
+// El mensaje se maneja dinámicamente en el cliente con JavaScript
 ---
 
 <section class="contact-section">
@@ -77,11 +68,8 @@ console.log('Status param:', status, 'StatusData:', statusData);
         <h3>Formulario de Contacto</h3>
         
         <div class="contact-form-wrapper">
-          {statusData && (
-          <div class={`status-message ${statusData.type === 'success' ? 'status-success' : 'status-error'}`}>
-            {statusData.text}
-          </div>
-        )}
+          <!-- Mensaje de estado dinámico -->
+          <div id="statusMessageContainer"></div>
         
         <form class="contact-form" id="contactForm" method="POST" action={actionUrl}>
           <input type="text" name="_gotcha" class="honeypot" tabindex="-1" autocomplete="off" />
@@ -447,3 +435,38 @@ console.log('Status param:', status, 'StatusData:', statusData);
   }
 
 </style>
+
+<script>
+  // Detectar parámetro status en URL y mostrar mensaje
+  document.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const status = urlParams.get('status');
+    const container = document.getElementById('statusMessageContainer');
+    
+    if (status && container) {
+      const messages = {
+        success: {
+          type: 'success',
+          text: '¡Mensaje enviado exitosamente! Nos pondremos en contacto contigo pronto.'
+        },
+        error: {
+          type: 'error',
+          text: 'No se pudo enviar el mensaje. Por favor intenta nuevamente o contáctanos por teléfono.'
+        }
+      };
+      
+      const messageData = messages[status];
+      if (messageData) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `status-message status-${messageData.type}`;
+        messageDiv.textContent = messageData.text;
+        container.appendChild(messageDiv);
+        
+        // Scroll suave al mensaje
+        setTimeout(() => {
+          messageDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 100);
+      }
+    }
+  });
+</script>
