@@ -127,45 +127,124 @@ const actionUrl = `${basePath}/contacto.php`;
   }
 
   .status-message {
-    padding: 1.5rem 2rem;
-    border-radius: 12px;
-    margin-bottom: 2rem;
-    font-size: 1.2rem;
-    font-weight: 700;
-    line-height: 1.6;
+    padding: 2rem 2.5rem;
+    border-radius: 20px;
+    margin-bottom: 2.5rem;
+    font-size: 1.15rem;
+    font-weight: 600;
+    line-height: 1.7;
     text-align: center;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    animation: slideInDown 0.5s ease-out;
+    position: relative;
+    overflow: hidden;
+    animation: slideInBounce 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    box-shadow: 
+      0 10px 40px rgba(0, 0, 0, 0.15),
+      0 0 0 1px rgba(255, 255, 255, 0.1) inset;
   }
 
-  @keyframes slideInDown {
-    from {
+  .status-message::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    animation: shimmer 2s infinite;
+  }
+
+  @keyframes slideInBounce {
+    0% {
       opacity: 0;
-      transform: translateY(-20px);
+      transform: translateY(-30px) scale(0.9);
     }
-    to {
+    50% {
+      transform: translateY(5px) scale(1.02);
+    }
+    100% {
       opacity: 1;
-      transform: translateY(0);
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  @keyframes shimmer {
+    0% {
+      left: -100%;
+    }
+    100% {
+      left: 100%;
     }
   }
 
   .status-success {
-    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-    border: 2px solid rgba(16, 185, 129, 0.5);
+    background: linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%);
+    border: 3px solid #34d399;
     color: #ffffff;
     font-weight: 700;
-    font-size: 1.3rem;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    font-size: 1.2rem;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 
+      0 15px 50px rgba(16, 185, 129, 0.4),
+      0 0 0 1px rgba(255, 255, 255, 0.2) inset,
+      0 5px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  .status-success::after {
+    content: '✓';
+    position: absolute;
+    right: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 2.5rem;
+    opacity: 0.3;
+    animation: checkPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes checkPulse {
+    0%, 100% {
+      transform: translateY(-50%) scale(1);
+      opacity: 0.3;
+    }
+    50% {
+      transform: translateY(-50%) scale(1.1);
+      opacity: 0.5;
+    }
   }
 
   .status-error {
-    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-    border: 2px solid rgba(239, 68, 68, 0.5);
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 50%, #b91c1c 100%);
+    border: 3px solid #f87171;
     color: #ffffff;
     font-weight: 700;
-    font-size: 1.3rem;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    font-size: 1.2rem;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 
+      0 15px 50px rgba(239, 68, 68, 0.4),
+      0 0 0 1px rgba(255, 255, 255, 0.2) inset,
+      0 5px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  .status-error::after {
+    content: '⚠';
+    position: absolute;
+    right: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 2.5rem;
+    opacity: 0.3;
+    animation: warningShake 1s ease-in-out infinite;
+  }
+
+  @keyframes warningShake {
+    0%, 100% {
+      transform: translateY(-50%) rotate(0deg);
+    }
+    25% {
+      transform: translateY(-50%) rotate(-5deg);
+    }
+    75% {
+      transform: translateY(-50%) rotate(5deg);
+    }
   }
   
   .contact-section {
