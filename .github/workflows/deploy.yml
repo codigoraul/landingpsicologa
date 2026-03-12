@@ -4,6 +4,7 @@ on:
   push:
     branches: ["main"]
   schedule:
+    # Ejecutar cada hora para actualizar contenido de WordPress automáticamente
     - cron: "0 * * * *"
   workflow_dispatch:
 
