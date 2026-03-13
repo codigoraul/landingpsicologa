@@ -1,18 +1,60 @@
-import { readFileSync, writeFileSync } from 'fs';
+import { readFileSync, writeFileSync, readdirSync, statSync } from 'fs';
+import path from 'path';
 
-const distPath = './dist/index.html';
-let html = readFileSync(distPath, 'utf-8');
+const DIST_DIR = './dist';
+const distRoot = path.resolve(DIST_DIR);
 
-function fixAbsolutePaths(content) {
-  content = content.replace(/href="\/(?!\/|#)([^"]*)"/g, 'href="./$1"');
-  content = content.replace(/src="\/(?!\/)([^"]*)"/g, 'src="./$1"');
-  content = content.replace(/action="\/(?!\/)([^"]*)"/g, 'action="./$1"');
-  content = content.replace(/url\('\/(?!\/)([^']*)'\)/g, "url('./$1')");
-  content = content.replace(/url\("\/(?!\/)([^"]*)"\)/g, 'url("./$1")');
-  content = content.replace(/url\(\/(?!\/)([^)]*)\)/g, 'url(./$1)');
-  return content;
+const buildRelativePrefix = (filePath) => {
+  const fileDir = path.dirname(filePath);
+  const relative = path.relative(fileDir, distRoot) || '.';
+  const normalized = relative === '' ? '.' : relative.replace(/\\/g, '/');
+  return normalized;
+};
+
+const makeRelative = (basePrefix, targetPath) => {
+  const cleanTarget = targetPath.replace(/^\/+/, '');
+  if (basePrefix === '.' || basePrefix === '') {
+    return `./${cleanTarget}`;
+  }
+  return `${basePrefix}/${cleanTarget}`.replace(/\/+/g, '/');
+};
+
+const buildProcessors = (prefix) => [
+  { regex: /href="\/(?!\/|#)([^"]*)"/g, replacer: (_, target) => `href="${makeRelative(prefix, target)}"` },
+  { regex: /src="\/(?!\/)([^"]*)"/g, replacer: (_, target) => `src="${makeRelative(prefix, target)}"` },
+  { regex: /action="\/(?!\/)([^"]*)"/g, replacer: (_, target) => `action="${makeRelative(prefix, target)}"` },
+  { regex: /url\('\/(?!\/)([^']*)'\)/g, replacer: (_, target) => `url('${makeRelative(prefix, target)}')` },
+  { regex: /url\("\/(?!\/)([^"]*)"\)/g, replacer: (_, target) => `url("${makeRelative(prefix, target)}")` },
+  { regex: /url\(\/(?!\/)([^)]*)\)/g, replacer: (_, target) => `url(${makeRelative(prefix, target)})` },
+];
+
+const shouldProcess = (filename) => /\.(html|css)$/i.test(filename);
+
+function walk(dir) {
+  const entries = readdirSync(dir);
+  entries.forEach((entry) => {
+    const fullPath = path.join(dir, entry);
+    const stats = statSync(fullPath);
+    if (stats.isDirectory()) {
+      walk(fullPath);
+      return;
+    }
+    if (!shouldProcess(entry)) return;
+
+    let content = readFileSync(fullPath, 'utf-8');
+    let updated = content;
+    const prefix = buildRelativePrefix(path.resolve(fullPath));
+    const processors = buildProcessors(prefix);
+    processors.forEach(({ regex, replacer }) => {
+      updated = updated.replace(regex, replacer);
+    });
+
+    if (updated !== content) {
+      writeFileSync(fullPath, updated, 'utf-8');
+      console.log(`🔧 Ajustado: ${fullPath}`);
+    }
+  });
 }
 
-html = fixAbsolutePaths(html);
-writeFileSync(distPath, html, 'utf-8');
-console.log('✅ Todas las rutas absolutas convertidas a relativas');
+walk(DIST_DIR);
+console.log('✅ Rutas relativas generadas según profundidad');
