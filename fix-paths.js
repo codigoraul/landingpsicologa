@@ -12,10 +12,19 @@ const buildRelativePrefix = (filePath) => {
 };
 
 const makeRelative = (basePrefix, targetPath) => {
-  const cleanTarget = targetPath.replace(/^\/+/, '');
+  const cleanTarget = targetPath.replace(/^\/+/g, '');
+
+  if (cleanTarget.startsWith('#')) {
+    if (basePrefix === '.' || basePrefix === '') {
+      return cleanTarget;
+    }
+    return `${basePrefix}/${cleanTarget}`.replace(/\/+/g, '/');
+  }
+
   if (basePrefix === '.' || basePrefix === '') {
     return `./${cleanTarget}`;
   }
+
   return `${basePrefix}/${cleanTarget}`.replace(/\/+/g, '/');
 };
 
@@ -23,6 +32,7 @@ const buildProcessors = (prefix) => [
   { regex: /href="\/(?!\/|#)([^"]*)"/g, replacer: (_, target) => `href="${makeRelative(prefix, target)}"` },
   { regex: /src="\/(?!\/)([^"]*)"/g, replacer: (_, target) => `src="${makeRelative(prefix, target)}"` },
   { regex: /action="\/(?!\/)([^"]*)"/g, replacer: (_, target) => `action="${makeRelative(prefix, target)}"` },
+  { regex: /href="\/(#(?!\/)[^"]*)"/g, replacer: (_, target) => `href="${makeRelative(prefix, target)}"` },
   { regex: /url\('\/(?!\/)([^']*)'\)/g, replacer: (_, target) => `url('${makeRelative(prefix, target)}')` },
   { regex: /url\("\/(?!\/)([^"]*)"\)/g, replacer: (_, target) => `url("${makeRelative(prefix, target)}")` },
   { regex: /url\(\/(?!\/)([^)]*)\)/g, replacer: (_, target) => `url(${makeRelative(prefix, target)})` },
