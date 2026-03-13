@@ -1,0 +1,502 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { getTestimonios } from '../lib/wordpress.js';
+
+type Testimonio = {
+  title?: { rendered?: string };
+  content?: { rendered?: string };
+  acf?: { cargo?: string };
+  _embedded?: {
+    'wp:featuredmedia'?: Array<{ source_url?: string }>;
+  };
+};
+
+const testimonios = (await getTestimonios()) as Testimonio[];
+const testimoniosCount = testimonios.length;
+const featuredTestimonials = testimonios.slice(0, 3);
+const hasTestimonials = testimoniosCount > 0;
+
+const rawBase = import.meta.env.BASE_URL ?? '/';
+const normalizedBase = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
+const basePathForLinks = normalizedBase === '/' ? '' : normalizedBase.replace(/\/$/, '');
+const homeLink = normalizedBase === '/' ? '/' : normalizedBase;
+const anchorLink = (hash: string) => {
+  const cleanHash = hash.startsWith('#') ? hash.slice(1) : hash;
+  return `${basePathForLinks || ''}/#${cleanHash}`;
+};
+const contactLink = anchorLink('#contacto');
+const canonicalUrl = 'https://ckdelap.cl/testimonios';
+---
+
+<Layout
+  title="Testimonios de pacientes - Psicóloga Camila Kush de la Puente"
+  description="Lee testimonios reales de pacientes adultos que realizaron procesos de psicoterapia online con Camila Kush de la Puente. Historias de transformación, contención profesional y sanación emocional."
+  canonical={canonicalUrl}
+>
+  <Header useAbsoluteLinks />
+  <main class="testimonios-page">
+    <section class="testimonios-hero">
+      <div class="hero-content">
+        <span class="hero-badge">Voces reales</span>
+        <h1>Testimonios auténticos de procesos terapéuticos transformadores</h1>
+        <p>
+          Cada historia refleja el compromiso, la valentía y el acompañamiento profesional en el proceso terapéutico.
+          Conoce cómo el trabajo conjunto ha permitido resignificar experiencias, sanar heridas y recuperar la confianza en sí mismas.
+        </p>
+        <div class="hero-stats">
+          <div class="stat-card">
+            <span class="stat-value">{testimoniosCount || '20+'}</span>
+            <span class="stat-label">Testimonios verificados</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-value">100%</span>
+            <span class="stat-label">Sesiones online</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-value">+8 años</span>
+            <span class="stat-label">de experiencia clínica</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-highlight">
+        <div class="highlight-card">
+          <h3>Historias que acompañan</h3>
+          <p>
+            Cada proceso terapéutico es único. Este espacio recopila experiencias honestas que pueden inspirar tu propio camino
+            de autoconocimiento y sanación emocional.
+          </p>
+          <a href="#testimonios-lista" class="cta-button">Explorar testimonios</a>
+        </div>
+        <div class="featured-list">
+          <h4>Destacados</h4>
+          <ul>
+            {featuredTestimonials.map((testimonio) => (
+              <li>
+                <span class="dot" aria-hidden="true"></span>
+                <span set:html={testimonio.title?.rendered || 'Testimonio'} />
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="testimonios-lista" class="testimonios-lista">
+      <div class="section-header">
+        <span class="section-badge">Historias de transformación</span>
+        <h2>Lo que dicen quienes han trabajado conmigo</h2>
+        <p>Estos testimonios fueron redactados por pacientes adultos que completaron procesos psicoterapéuticos online.</p>
+      </div>
+
+      {hasTestimonials ? (
+        <div class="grid">
+          {testimonios.map((testimonio) => (
+            <article class="testimonio-card">
+              <div class="quote-icon" aria-hidden="true">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M7 7h4v4H9a2 2 0 0 0-2 2v4H3v-4a6 6 0 0 1 6-6z" />
+                  <path d="M17 7h4v4h-2a2 2 0 0 0-2 2v4h-4v-4a6 6 0 0 1 6-6z" />
+                </svg>
+              </div>
+              <div class="testimonio-content" set:html={testimonio.content?.rendered || ''} />
+              <div class="autor">
+                {testimonio._embedded?.['wp:featuredmedia']?.[0]?.source_url && (
+                  <div class="autor-foto">
+                    <img src={testimonio._embedded['wp:featuredmedia'][0].source_url} alt={testimonio.title?.rendered || 'Paciente'} loading="lazy" />
+                  </div>
+                )}
+                <div class="autor-info">
+                  <h3 set:html={testimonio.title?.rendered || 'Paciente anónimo'} />
+                  {testimonio.acf?.cargo && <p>{testimonio.acf.cargo}</p>}
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      ) : (
+        <div class="empty-state">
+          <h3>Aún no hay testimonios publicados</h3>
+          <p>Pronto compartiremos experiencias reales de pacientes que ya han vivido el proceso terapéutico.</p>
+        </div>
+      )}
+    </section>
+
+    <section class="cta-section">
+      <div class="cta-card">
+        <div>
+          <span class="cta-badge">¿Lista para tu proceso?</span>
+          <h2>Agenda una primera sesión de exploración</h2>
+          <p>Hablemos sobre lo que estás viviendo hoy y cómo puedo acompañarte con estrategias terapéuticas individualizadas.</p>
+        </div>
+        <div class="cta-actions">
+          <a href={homeLink} class="cta-button secondary">Volver al inicio</a>
+          <a href={contactLink} class="cta-button">Ir al formulario de contacto</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .testimonios-page {
+    background: linear-gradient(180deg, #f6f5f1 0%, #ffffff 60%, #f4fbfc 100%);
+    padding-top: 140px;
+  }
+
+  .testimonios-hero {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 2.5rem;
+    padding: 3rem clamp(1.5rem, 4vw, 4rem);
+    align-items: center;
+  }
+
+  .hero-content h1 {
+    font-size: clamp(2.2rem, 3.8vw, 3.75rem);
+    line-height: 1.15;
+    color: #1c2230;
+    margin: 1rem 0 1.25rem;
+    font-family: 'Playfair Display', serif;
+  }
+
+  .hero-content p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #4a5768;
+    max-width: 620px;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1.5rem;
+    border-radius: 999px;
+    background: rgba(255, 148, 132, 0.15);
+    color: #ff6f61;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+  }
+
+  .hero-badge::after {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: currentColor;
+  }
+
+  .hero-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .stat-card {
+    background: white;
+    border-radius: 20px;
+    padding: 1.5rem;
+    box-shadow: 0 25px 45px rgba(14, 30, 37, 0.08);
+    border: 1px solid rgba(15, 23, 42, 0.05);
+  }
+
+  .stat-value {
+    display: block;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1f2937;
+  }
+
+  .stat-label {
+    color: #6b7280;
+    font-size: 0.95rem;
+  }
+
+  .hero-highlight {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .highlight-card,
+  .featured-list {
+    background: rgba(255, 255, 255, 0.75);
+    border-radius: 28px;
+    padding: 2rem;
+    box-shadow: 0 25px 45px rgba(15, 23, 42, 0.08);
+    border: 1px solid rgba(15, 23, 42, 0.05);
+    backdrop-filter: blur(10px);
+  }
+
+  .highlight-card h3 {
+    margin-top: 0;
+    font-size: 1.5rem;
+    color: #111827;
+  }
+
+  .highlight-card p {
+    color: #4b5563;
+    line-height: 1.7;
+  }
+
+  .featured-list h4 {
+    margin-top: 0;
+    color: #111827;
+    font-size: 1.1rem;
+  }
+
+  .featured-list ul {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .featured-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: #374151;
+    font-weight: 500;
+  }
+
+  .featured-list .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #56BAC0, #4a9ba1);
+    box-shadow: 0 5px 12px rgba(86, 186, 192, 0.4);
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding: 0 1rem;
+  }
+
+  .section-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1.25rem;
+    border-radius: 999px;
+    background: rgba(86, 186, 192, 0.15);
+    color: #276e74;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+  }
+
+  .section-header h2 {
+    font-size: clamp(2rem, 3vw, 2.8rem);
+    color: #1b2430;
+    margin: 1rem 0 0.7rem;
+  }
+
+  .section-header p {
+    color: #556071;
+    max-width: 640px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  .testimonios-lista {
+    padding: 2rem clamp(1.5rem, 4vw, 4rem) 4rem;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.75rem;
+  }
+
+  .testimonio-card {
+    background: white;
+    border-radius: 28px;
+    padding: 2rem;
+    border: 1px solid rgba(17, 24, 39, 0.05);
+    box-shadow: 0 20px 45px rgba(12, 22, 40, 0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    position: relative;
+  }
+
+  .testimonio-card::after {
+    content: '';
+    position: absolute;
+    inset: 1px;
+    border-radius: 25px;
+    border: 1px dashed rgba(86, 186, 192, 0.25);
+    pointer-events: none;
+  }
+
+  .quote-icon {
+    width: 54px;
+    height: 54px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #56BAC0, #3FA1A8);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 12px 30px rgba(86, 186, 192, 0.35);
+  }
+
+  .testimonio-content :global(p) {
+    margin: 0;
+    color: #1f2937;
+    line-height: 1.85;
+    font-size: 1rem;
+  }
+
+  .testimonio-content :global(p + p) {
+    margin-top: 0.85rem;
+    color: #4b5563;
+  }
+
+  .autor {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+  }
+
+  .autor-foto {
+    width: 64px;
+    height: 64px;
+    border-radius: 18px;
+    overflow: hidden;
+    border: 3px solid rgba(255, 148, 132, 0.35);
+  }
+
+  .autor-info h3 {
+    margin: 0;
+    font-size: 1.05rem;
+    color: #111827;
+  }
+
+  .autor-info p {
+    margin: 0.15rem 0 0;
+    color: #6b7280;
+    font-size: 0.95rem;
+  }
+
+  .empty-state {
+    text-align: center;
+    background: white;
+    padding: 3rem;
+    border-radius: 32px;
+    border: 1px solid rgba(15, 23, 42, 0.05);
+    box-shadow: 0 30px 60px rgba(15, 23, 42, 0.08);
+  }
+
+  .cta-section {
+    padding: 1rem clamp(1.5rem, 4vw, 4rem) 4rem;
+  }
+
+  .cta-card {
+    background: linear-gradient(135deg, #111826, #1f2b46);
+    border-radius: 36px;
+    padding: clamp(2rem, 4vw, 3.5rem);
+    color: white;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .cta-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.4rem 1.1rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.15);
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+
+  .cta-card h2 {
+    font-size: clamp(2rem, 3vw, 2.8rem);
+    margin: 1rem 0 0.5rem;
+  }
+
+  .cta-card p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.8);
+    max-width: 580px;
+    line-height: 1.7;
+  }
+
+  .cta-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .cta-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.9rem 1.75rem;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #56BAC0, #4a9ba1);
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    box-shadow: 0 20px 35px rgba(86, 186, 192, 0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 25px 45px rgba(86, 186, 192, 0.4);
+  }
+
+  .cta-button.secondary {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: none;
+  }
+
+  @media (max-width: 1024px) {
+    .testimonios-hero {
+      grid-template-columns: 1fr;
+      padding-top: 1rem;
+    }
+
+    .hero-highlight {
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+  }
+
+  @media (max-width: 640px) {
+    .hero-stats {
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    }
+
+    .cta-card {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .cta-actions {
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .cta-button,
+    .cta-button.secondary {
+      width: 100%;
+    }
+  }
+</style>

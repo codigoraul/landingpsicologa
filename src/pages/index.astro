@@ -13,6 +13,12 @@ const convenios = [
 	{ name: 'Cruz Blanca', logo: '/images/cruzblanca.png' },
 	{ name: 'Consalud', logo: '/images/consalud.png' }
 ];
+
+const rawBase = import.meta.env.BASE_URL ?? '/';
+const normalizedBase = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
+const testimoniosPageUrl = normalizedBase === '/'
+	? '/testimonios'
+	: `${normalizedBase.replace(/\/$/, '')}/testimonios`;
 ---
 
 <Layout title="Psicóloga Clínica - Psicoterapia Adulto">
@@ -422,6 +428,21 @@ const convenios = [
 	<div id="testimonios">
 		<Testimonios />
 	</div>
+
+	<section class="testimonios-cta">
+		<div class="cta-card">
+			<div class="cta-content">
+				<span class="cta-badge">Historias reales</span>
+				<h3>Conoce todos los testimonios y experiencias terapéuticas</h3>
+				<p>Cada testimonio es una muestra del proceso de sanación y acompañamiento profesional. Inspírate leyendo más historias de pacientes adultos que confiaron en su proceso terapéutico.</p>
+			</div>
+			<div class="cta-actions">
+				<a class="cta-button" href={testimoniosPageUrl}>
+					Ver todos los testimonios
+				</a>
+			</div>
+		</div>
+	</section>
 	
 	<div id="contacto">
 		<ContactInfo />
