@@ -15,8 +15,15 @@ type Testimonio = {
 
 const testimonios = (await getTestimonios()) as Testimonio[];
 const testimoniosCount = testimonios.length;
-const featuredTestimonials = testimonios.slice(0, 3);
 const hasTestimonials = testimoniosCount > 0;
+const groupTestimonials = (items: Testimonio[], size = 3) => {
+  const groups: Testimonio[][] = [];
+  for (let i = 0; i < items.length; i += size) {
+    groups.push(items.slice(i, i + size));
+  }
+  return groups;
+};
+const paginatedTestimonials = groupTestimonials(testimonios, 3);
 
 const rawBase = import.meta.env.BASE_URL ?? '/';
 const normalizedBase = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
@@ -39,11 +46,10 @@ const canonicalUrl = 'https://ckdelap.cl/testimonios';
   <main class="testimonios-page">
     <section class="testimonios-hero">
       <div class="hero-content">
-        <span class="hero-badge">Voces reales</span>
-        <h1>Testimonios auténticos de procesos terapéuticos transformadores</h1>
+        <h1>Testimonios de procesos psicoterapeuticos online</h1>
         <p>
           Cada historia refleja el compromiso, la valentía y el acompañamiento profesional en el proceso terapéutico.
-          Conoce cómo el trabajo conjunto ha permitido resignificar experiencias, sanar heridas y recuperar la confianza en sí mismas.
+          Conoce cómo el trabajo conjunto ha permitido resignificar experiencias, sanar heridas y recuperar la confianza .
         </p>
         <div class="hero-stats">
           <div class="stat-card">
@@ -60,60 +66,69 @@ const canonicalUrl = 'https://ckdelap.cl/testimonios';
           </div>
         </div>
       </div>
-      <div class="hero-highlight">
-        <div class="highlight-card">
-          <h3>Historias que acompañan</h3>
-          <p>
-            Cada proceso terapéutico es único. Este espacio recopila experiencias honestas que pueden inspirar tu propio camino
-            de autoconocimiento y sanación emocional.
-          </p>
-          <a href="#testimonios-lista" class="cta-button">Explorar testimonios</a>
-        </div>
-        <div class="featured-list">
-          <h4>Destacados</h4>
-          <ul>
-            {featuredTestimonials.map((testimonio) => (
-              <li>
-                <span class="dot" aria-hidden="true"></span>
-                <span set:html={testimonio.title?.rendered || 'Testimonio'} />
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
     </section>
 
     <section id="testimonios-lista" class="testimonios-lista">
       <div class="section-header">
-        <span class="section-badge">Historias de transformación</span>
         <h2>Lo que dicen quienes han trabajado conmigo</h2>
         <p>Estos testimonios fueron redactados por pacientes adultos que completaron procesos psicoterapéuticos online.</p>
       </div>
 
       {hasTestimonials ? (
-        <div class="grid">
-          {testimonios.map((testimonio) => (
-            <article class="testimonio-card">
-              <div class="quote-icon" aria-hidden="true">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                  <path d="M7 7h4v4H9a2 2 0 0 0-2 2v4H3v-4a6 6 0 0 1 6-6z" />
-                  <path d="M17 7h4v4h-2a2 2 0 0 0-2 2v4h-4v-4a6 6 0 0 1 6-6z" />
-                </svg>
-              </div>
-              <div class="testimonio-content" set:html={testimonio.content?.rendered || ''} />
-              <div class="autor">
-                {testimonio._embedded?.['wp:featuredmedia']?.[0]?.source_url && (
-                  <div class="autor-foto">
-                    <img src={testimonio._embedded['wp:featuredmedia'][0].source_url} alt={testimonio.title?.rendered || 'Paciente'} loading="lazy" />
-                  </div>
-                )}
-                <div class="autor-info">
-                  <h3 set:html={testimonio.title?.rendered || 'Paciente anónimo'} />
-                  {testimonio.acf?.cargo && <p>{testimonio.acf.cargo}</p>}
+        <div class="testimonios-carousel" data-groups={paginatedTestimonials.length}>
+          <div class="carousel-track">
+            {paginatedTestimonials.map((group, groupIndex) => (
+              <div class:list={{ 'carousel-slide': true, active: groupIndex === 0 }} data-slide-index={groupIndex}>
+                <div class="grid">
+                  {group.map((testimonio) => (
+                    <article class="testimonio-card">
+                      <div class="quote-icon" aria-hidden="true">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                          <path d="M7 7h4v4H9a2 2 0 0 0-2 2v4H3v-4a6 6 0 0 1 6-6z" />
+                          <path d="M17 7h4v4h-2a2 2 0 0 0-2 2v4h-4v-4a6 6 0 0 1 6-6z" />
+                        </svg>
+                      </div>
+                      <div class="testimonio-content" set:html={testimonio.content?.rendered || ''} />
+                      <div class="autor">
+                        {testimonio._embedded?.['wp:featuredmedia']?.[0]?.source_url && (
+                          <div class="autor-foto">
+                            <img src={testimonio._embedded['wp:featuredmedia'][0].source_url} alt={testimonio.title?.rendered || 'Paciente'} loading="lazy" />
+                          </div>
+                        )}
+                        <div class="autor-info">
+                          <h3 set:html={testimonio.title?.rendered || 'Paciente anónimo'} />
+                          {testimonio.acf?.cargo && <p>{testimonio.acf.cargo}</p>}
+                        </div>
+                      </div>
+                    </article>
+                  ))}
                 </div>
               </div>
-            </article>
-          ))}
+            ))}
+          </div>
+
+          {paginatedTestimonials.length > 1 && (
+            <>
+              <div class="carousel-controls">
+                <button class="carousel-btn" type="button" data-carousel="prev" aria-label="Ver testimonios anteriores">
+                  <span>&larr;</span>
+                </button>
+                <button class="carousel-btn" type="button" data-carousel="next" aria-label="Ver testimonios siguientes">
+                  <span>&rarr;</span>
+                </button>
+              </div>
+              <div class="carousel-dots">
+                {paginatedTestimonials.map((_, dotIndex) => (
+                  <button
+                    type="button"
+                    class:list={{ 'carousel-dot': true, active: dotIndex === 0 }}
+                    data-carousel-dot={dotIndex}
+                    aria-label={`Ver grupo ${dotIndex + 1}`}
+                  ></button>
+                ))}
+              </div>
+            </>
+          )}
         </div>
       ) : (
         <div class="empty-state">
@@ -140,6 +155,46 @@ const canonicalUrl = 'https://ckdelap.cl/testimonios';
   <Footer />
 </Layout>
 
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const carousel = document.querySelector('.testimonios-carousel');
+    if (!carousel) return;
+
+    const slides = Array.from(carousel.querySelectorAll('.carousel-slide'));
+    if (!slides.length) return;
+    const dots = Array.from(carousel.querySelectorAll('[data-carousel-dot]'));
+    const prevBtn = carousel.querySelector('[data-carousel="prev"]');
+    const nextBtn = carousel.querySelector('[data-carousel="next"]');
+
+    let current = 0;
+
+    const updateSlides = () => {
+      slides.forEach((slide, index) => {
+        slide.classList.toggle('active', index === current);
+      });
+      dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === current);
+        dot.setAttribute('aria-current', index === current ? 'true' : 'false');
+      });
+    };
+
+    const goTo = (index) => {
+      const total = slides.length;
+      current = (index + total) % total;
+      updateSlides();
+    };
+
+    prevBtn?.addEventListener('click', () => goTo(current - 1));
+    nextBtn?.addEventListener('click', () => goTo(current + 1));
+
+    dots.forEach((dot, index) => {
+      dot.addEventListener('click', () => goTo(index));
+    });
+
+    updateSlides();
+  });
+</script>
+
 <style>
   .testimonios-page {
     background: linear-gradient(180deg, #f6f5f1 0%, #ffffff 60%, #f4fbfc 100%);
@@ -147,11 +202,7 @@ const canonicalUrl = 'https://ckdelap.cl/testimonios';
   }
 
   .testimonios-hero {
-    display: grid;
-    grid-template-columns: 1.1fr 0.9fr;
-    gap: 2.5rem;
     padding: 3rem clamp(1.5rem, 4vw, 4rem);
-    align-items: center;
   }
 
   .hero-content h1 {
@@ -166,7 +217,7 @@ const canonicalUrl = 'https://ckdelap.cl/testimonios';
     font-size: 1.1rem;
     line-height: 1.8;
     color: #4a5768;
-    max-width: 620px;
+    max-width: 720px;
   }
 
   .hero-badge {
@@ -218,61 +269,23 @@ const canonicalUrl = 'https://ckdelap.cl/testimonios';
     font-size: 0.95rem;
   }
 
-  .hero-highlight {
-    display: grid;
-    gap: 1.5rem;
-  }
+  @media (min-width: 900px) {
+    .testimonios-hero {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-  .highlight-card,
-  .featured-list {
-    background: rgba(255, 255, 255, 0.75);
-    border-radius: 28px;
-    padding: 2rem;
-    box-shadow: 0 25px 45px rgba(15, 23, 42, 0.08);
-    border: 1px solid rgba(15, 23, 42, 0.05);
-    backdrop-filter: blur(10px);
-  }
+    .hero-content {
+      max-width: 760px;
+      margin: 0 auto;
+      text-align: center;
+    }
 
-  .highlight-card h3 {
-    margin-top: 0;
-    font-size: 1.5rem;
-    color: #111827;
-  }
-
-  .highlight-card p {
-    color: #4b5563;
-    line-height: 1.7;
-  }
-
-  .featured-list h4 {
-    margin-top: 0;
-    color: #111827;
-    font-size: 1.1rem;
-  }
-
-  .featured-list ul {
-    list-style: none;
-    padding: 0;
-    margin: 1rem 0 0;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .featured-list li {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    color: #374151;
-    font-weight: 500;
-  }
-
-  .featured-list .dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #56BAC0, #4a9ba1);
-    box-shadow: 0 5px 12px rgba(86, 186, 192, 0.4);
+    .hero-stats {
+      margin-left: auto;
+      margin-right: auto;
+    }
   }
 
   .section-header {
@@ -312,10 +325,92 @@ const canonicalUrl = 'https://ckdelap.cl/testimonios';
     padding: 2rem clamp(1.5rem, 4vw, 4rem) 4rem;
   }
 
+  .testimonios-carousel {
+    position: relative;
+  }
+
+  .carousel-track {
+    position: relative;
+  }
+
+  .carousel-slide {
+    display: none;
+    animation: fadeSlide 0.4s ease;
+  }
+
+  .carousel-slide.active {
+    display: block;
+  }
+
   .grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 1.75rem;
+    max-width: 1050px;
+    margin: 0 auto;
+  }
+
+  .carousel-controls {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2.5rem;
+  }
+
+  .carousel-btn {
+    background: #ffffff;
+    border: 1px solid rgba(31, 41, 55, 0.1);
+    border-radius: 999px;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.25rem;
+    color: #1f2937;
+    box-shadow: 0 15px 35px rgba(15, 23, 42, 0.12);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+  }
+
+  .carousel-btn:hover {
+    transform: translateY(-2px);
+    color: #56BAC0;
+    box-shadow: 0 18px 40px rgba(86, 186, 192, 0.25);
+  }
+
+  .carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+
+  .carousel-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    background: #d1d5db;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+
+  .carousel-dot.active {
+    background: #56BAC0;
+    transform: scale(1.15);
+  }
+
+  @keyframes fadeSlide {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   .testimonio-card {
