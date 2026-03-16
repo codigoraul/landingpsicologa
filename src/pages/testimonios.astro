@@ -16,14 +16,15 @@ type Testimonio = {
 const testimonios = (await getTestimonios()) as Testimonio[];
 const testimoniosCount = testimonios.length;
 const hasTestimonials = testimoniosCount > 0;
-const groupTestimonials = (items: Testimonio[], size = 3) => {
+const ITEMS_PER_SLIDE = 6;
+const groupTestimonials = (items: Testimonio[], size = ITEMS_PER_SLIDE) => {
   const groups: Testimonio[][] = [];
   for (let i = 0; i < items.length; i += size) {
     groups.push(items.slice(i, i + size));
   }
   return groups;
 };
-const paginatedTestimonials = groupTestimonials(testimonios, 3);
+const paginatedTestimonials = groupTestimonials(testimonios, ITEMS_PER_SLIDE);
 
 const rawBase = import.meta.env.BASE_URL ?? '/';
 const normalizedBase = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
@@ -327,6 +328,8 @@ const canonicalUrl = 'https://ckdelap.cl/testimonios';
 
   .testimonios-carousel {
     position: relative;
+    max-width: 1400px;
+    margin: 0 auto;
   }
 
   .carousel-track {
@@ -343,11 +346,29 @@ const canonicalUrl = 'https://ckdelap.cl/testimonios';
   }
 
   .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 1.75rem;
-    max-width: 1050px;
     margin: 0 auto;
+  }
+
+  .grid .testimonio-card {
+    flex: 1 1 calc(33.333% - 1.75rem);
+    min-width: 300px;
+    max-width: 420px;
+  }
+
+  @media (max-width: 1024px) {
+    .grid .testimonio-card {
+      flex: 1 1 calc(50% - 1.75rem);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .grid .testimonio-card {
+      flex: 1 1 100%;
+    }
   }
 
   .carousel-controls {
