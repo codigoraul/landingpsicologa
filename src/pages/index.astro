@@ -642,6 +642,16 @@ const testimoniosPageUrl = normalizedBase === '/'
 		animation: fadeInUp 1s ease-out;
 	}
 
+	.hero-content .hero-title {
+		font-size: 3rem;
+		font-weight: 300;
+		line-height: 1.3;
+		margin-bottom: 2rem;
+		color: #ffffff;
+		font-family: 'Raleway', sans-serif !important;
+		letter-spacing: -0.01em;
+	}
+
 	.slider-indicators {
 		position: absolute;
 		bottom: 3rem;
@@ -730,29 +740,19 @@ const testimoniosPageUrl = normalizedBase === '/'
 		box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 	}
 
-	h1,
-	.hero-title {
-		font-size: 64px;
-		font-weight: 800;
-		margin-bottom: 1.5rem;
-		line-height: 1.2;
-		letter-spacing: -0.02em;
-		font-family: 'Inter', sans-serif !important;
-	}
-
 	/* Tablet */
 	@media (max-width: 1024px) {
-		h1,
-		.hero-title {
-			font-size: 48px;
+		.hero-content h1,
+		.hero-content .hero-title {
+			font-size: 2.5rem;
 		}
 	}
 
 	/* Mobile */
 	@media (max-width: 768px) {
-		h1,
-		.hero-title {
-			font-size: 32px;
+		.hero-content h1,
+		.hero-content .hero-title {
+			font-size: 2rem;
 			line-height: 1.3;
 		}
 	}
@@ -1541,6 +1541,102 @@ const testimoniosPageUrl = normalizedBase === '/'
 	@keyframes float {
 		0%, 100% { transform: translateY(0px); }
 		50% { transform: translateY(-10px); }
+	}
+
+	/* SECCIÓN: Testimonios CTA */
+	.testimonios-cta {
+		padding: 4rem 2rem;
+		background: linear-gradient(135deg, #f0f9f8 0%, #ffffff 100%);
+	}
+
+	.testimonios-cta .cta-card {
+		max-width: 900px;
+		margin: 0 auto;
+		background: white;
+		padding: 3rem;
+		border-radius: 24px;
+		box-shadow: 0 10px 40px rgba(86, 186, 192, 0.12);
+		border: 2px solid rgba(86, 186, 192, 0.1);
+		text-align: center;
+		transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+	}
+
+	.testimonios-cta .cta-card:hover {
+		transform: translateY(-5px);
+		box-shadow: 0 20px 50px rgba(86, 186, 192, 0.2);
+		border-color: #56BAC0;
+	}
+
+	.testimonios-cta .cta-badge {
+		display: inline-block;
+		padding: 0.5rem 1.5rem;
+		background: rgba(86, 186, 192, 0.12);
+		color: #56BAC0;
+		border-radius: 50px;
+		font-size: 0.875rem;
+		font-weight: 600;
+		letter-spacing: 0.5px;
+		margin-bottom: 1.5rem;
+	}
+
+	.testimonios-cta h3 {
+		font-size: 2rem;
+		color: #464D57;
+		font-weight: 600;
+		margin-bottom: 1rem;
+		font-family: 'Playfair Display', serif !important;
+		line-height: 1.3;
+	}
+
+	.testimonios-cta .cta-content p {
+		font-size: 1.125rem;
+		color: #64748b;
+		line-height: 1.7;
+		margin-bottom: 2rem;
+		max-width: 700px;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	.testimonios-cta .cta-actions {
+		margin-top: 2rem;
+	}
+
+	.testimonios-cta .cta-button {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.75rem;
+		padding: 1rem 2.5rem;
+		background: #56BAC0;
+		color: white;
+		text-decoration: none;
+		border-radius: 50px;
+		font-weight: 600;
+		font-size: 1rem;
+		transition: all 0.3s ease;
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+		box-shadow: 0 4px 15px rgba(86, 186, 192, 0.3);
+	}
+
+	.testimonios-cta .cta-button:hover {
+		background: #4AA8AE;
+		transform: translateY(-2px);
+		box-shadow: 0 6px 20px rgba(86, 186, 192, 0.4);
+	}
+
+	@media (max-width: 768px) {
+		.testimonios-cta .cta-card {
+			padding: 2rem 1.5rem;
+		}
+
+		.testimonios-cta h3 {
+			font-size: 1.5rem;
+		}
+
+		.testimonios-cta .cta-content p {
+			font-size: 1rem;
+		}
 	}
 
 </style>

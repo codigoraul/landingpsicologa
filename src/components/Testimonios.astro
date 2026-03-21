@@ -11,12 +11,19 @@ type Testimonio = {
 };
 
 const allTestimonios = await getTestimonios();
-const testimonios = (allTestimonios || []) as Testimonio[];
-const testimoniosPages = testimonios.reduce((pages: Testimonio[][], item: Testimonio, index: number) => {
-  if (index % 3 === 0) pages.push([]);
-  pages[pages.length - 1].push(item);
-  return pages;
-}, [] as Testimonio[][]);
+const testimonios = ((allTestimonios || []) as Testimonio[]).slice(0, 3);
+
+const truncateContentServer = (html: string, maxParagraphs: number = 3): string => {
+  const pRegex = /<p[^>]*>.*?<\/p>/gs;
+  const matches = html.match(pRegex) || [];
+  return matches.slice(0, maxParagraphs).join('');
+};
+
+const rawBase = import.meta.env.BASE_URL ?? '/';
+const normalizedBase = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
+const testimoniosPageUrl = normalizedBase === '/'
+  ? '/testimonios'
+  : `${normalizedBase.replace(/\/$/, '')}/testimonios`;
 ---
 
 <section class="testimonios-section">
@@ -27,15 +34,10 @@ const testimoniosPages = testimonios.reduce((pages: Testimonio[][], item: Testim
       <p class="section-subtitle">Historias de transformación y acompañamiento terapéutico</p>
     </div>
     
-    <div class="testimonios-carousel" data-testimonios-carousel>
-      <button class="carousel-control prev" type="button" aria-label="Testimonio anterior">‹</button>
-      <div class="testimonios-viewport">
-        <div class="testimonios-track" data-track>
-          {testimoniosPages && testimoniosPages.length > 0 ? (
-            testimoniosPages.map((group: Testimonio[], pageIndex: number) => (
-              <div class="testimonios-page" style={`animation-delay: ${pageIndex * 0.15}s`}>
-                {group.map((testimonio, index) => (
-                  <article class="testimonio-card" style={`animation-delay: ${(pageIndex * 3 + index) * 0.1}s`}>
+    <div class="testimonios-grid">
+      {testimonios && testimonios.length > 0 ? (
+        testimonios.map((testimonio, index) => (
+                  <article class="testimonio-card" style={`animation-delay: ${index * 0.1}s`}>
                 <div class="quote-icon">
                   <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                     <path d="M7 7h4v4H9a2 2 0 0 0-2 2v4H3v-4a6 6 0 0 1 6-6z" />
@@ -50,7 +52,8 @@ const testimoniosPages = testimonios.reduce((pages: Testimonio[][], item: Testim
                   ))}
                 </div>
                 
-                <div class="content" set:html={testimonio.content.rendered} />
+                <div class="content" set:html={truncateContentServer(testimonio.content.rendered, 3)} />
+                <a href={testimoniosPageUrl} class="read-more">Leer más →</a>
                 
                 <div class="author">
                   {testimonio._embedded?.['wp:featuredmedia']?.[0]?.source_url && (
@@ -69,16 +72,11 @@ const testimoniosPages = testimonios.reduce((pages: Testimonio[][], item: Testim
                     )}
                   </div>
                 </div>
-                  </article>
-                ))}
-              </div>
-            ))
-          ) : (
-            <p class="no-testimonios">No hay testimonios disponibles</p>
-          )}
-        </div>
-      </div>
-      <button class="carousel-control next" type="button" aria-label="Siguiente testimonio">›</button>
+          </article>
+        ))
+      ) : (
+        <p class="no-testimonios">No hay testimonios disponibles</p>
+      )}
     </div>
   </div>
 </section>
@@ -206,55 +204,11 @@ const testimoniosPages = testimonios.reduce((pages: Testimonio[][], item: Testim
     line-height: 1.6;
   }
   
-  .testimonios-carousel {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-
-  .testimonios-viewport {
-    overflow: hidden;
-    width: 100%;
-  }
-
-  .testimonios-track {
-    display: flex;
-    transition: transform 0.45s ease;
-    will-change: transform;
-  }
-
-  .testimonios-page {
-    min-width: 100%;
+  .testimonios-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 2rem;
     align-items: flex-start;
-  }
-
-  .carousel-control {
-    width: 44px;
-    height: 44px;
-    border: none;
-    border-radius: 999px;
-    background: #56BAC0;
-    color: #fff;
-    font-size: 1.8rem;
-    line-height: 1;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    box-shadow: 0 10px 25px rgba(86, 186, 192, 0.35);
-    transition: transform 0.2s ease, opacity 0.2s ease;
-  }
-
-  .carousel-control:hover {
-    transform: translateY(-2px);
-  }
-
-  .carousel-control:disabled {
-    opacity: 0.35;
-    cursor: not-allowed;
   }
   
   .testimonio-card {
@@ -325,6 +279,23 @@ const testimoniosPages = testimonios.reduce((pages: Testimonio[][], item: Testim
     margin-top: 0.75rem;
     color: #4b5563;
   }
+
+  .read-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    color: #56BAC0;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .read-more:hover {
+    color: #4AA8AE;
+    gap: 0.75rem;
+  }
   
   .author {
     display: flex;
@@ -349,11 +320,7 @@ const testimoniosPages = testimonios.reduce((pages: Testimonio[][], item: Testim
   }
 
   @media (max-width: 768px) {
-    .testimonios-carousel {
-      gap: 0.75rem;
-    }
-
-    .testimonios-page {
+    .testimonios-grid {
       grid-template-columns: 1fr;
       gap: 1rem;
     }
@@ -368,10 +335,5 @@ const testimoniosPages = testimonios.reduce((pages: Testimonio[][], item: Testim
       border-radius: 24px;
     }
 
-    .carousel-control {
-      width: 38px;
-      height: 38px;
-      font-size: 1.4rem;
-    }
   }
 </style>
